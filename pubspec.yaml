@@ -38,6 +38,7 @@ dependencies:
   mobx:
   flutter_mobx:
   get_it:
+  brasil_fields:
 
 dev_dependencies:
   flutter_test:

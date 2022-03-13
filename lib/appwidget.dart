@@ -21,7 +21,7 @@ class AppWidget extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: BaseScreen(),
+      home: const BaseScreen(),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 class BaseScreen extends StatefulWidget {
-  BaseScreen({Key? key}) : super(key: key);
+  const BaseScreen({Key? key}) : super(key: key);
 
   @override
   State<BaseScreen> createState() => _BaseScreenState();

@@ -1,5 +1,4 @@
 import 'package:clone_olx/appwidget.dart';
-import 'package:clone_olx/screens/base/base_screen.dart';
 import 'package:clone_olx/stores/page_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';

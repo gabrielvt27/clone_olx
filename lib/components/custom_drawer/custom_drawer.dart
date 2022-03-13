@@ -14,7 +14,7 @@ class CustomDrawer extends StatelessWidget {
         child: Drawer(
           child: ListView(
             children: [
-              CustomDrawerHeader(),
+              const CustomDrawerHeader(),
               PageSection(),
             ],
           ),
