@@ -8,7 +8,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
-  final SignupStore signupStore = SignupStore();
+  final SignupStore signUpStore = SignupStore();
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +39,14 @@ class SignUpScreen extends StatelessWidget {
                   Observer(
                     builder: (context) {
                       return TextField(
+                        enabled: !signUpStore.loading,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: "Exemplo: João S.",
                           isDense: true,
-                          errorText: signupStore.nameError,
+                          errorText: signUpStore.nameError,
                         ),
-                        onChanged: signupStore.setName,
+                        onChanged: signUpStore.setName,
                       );
                     },
                   ),
@@ -56,14 +57,21 @@ class SignUpScreen extends StatelessWidget {
                     title: 'E-mail',
                     subtitle: 'Enviaremos um e-mail de  confirmação.',
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Exemplo: joao@gmail.com",
-                      isDense: true,
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    autocorrect: false,
+                  Observer(
+                    builder: (_) {
+                      return TextField(
+                        enabled: !signUpStore.loading,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: "Exemplo: joao@gmail.com",
+                          isDense: true,
+                          errorText: signUpStore.emailError,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        autocorrect: false,
+                        onChanged: signUpStore.setEmail,
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -72,17 +80,24 @@ class SignUpScreen extends StatelessWidget {
                     title: 'Celular',
                     subtitle: 'Proteja sua conta.',
                   ),
-                  TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Exemplo: (99) 9999-9999",
-                      isDense: true,
-                    ),
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter(),
-                    ],
+                  Observer(
+                    builder: (_) {
+                      return TextField(
+                        enabled: !signUpStore.loading,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: "Exemplo: (99) 9999-9999",
+                          isDense: true,
+                          errorText: signUpStore.phoneError,
+                        ),
+                        keyboardType: TextInputType.phone,
+                        onChanged: signUpStore.setPhone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter(),
+                        ],
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -91,12 +106,19 @@ class SignUpScreen extends StatelessWidget {
                     title: 'Senha',
                     subtitle: 'Use letra, números e caracteres especiais.',
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                    obscureText: true,
+                  Observer(
+                    builder: (_) {
+                      return TextField(
+                        enabled: !signUpStore.loading,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          isDense: true,
+                          errorText: signUpStore.passError,
+                        ),
+                        obscureText: true,
+                        onChanged: signUpStore.setPass,
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -105,33 +127,51 @@ class SignUpScreen extends StatelessWidget {
                     title: 'Confirmar Senha',
                     subtitle: 'Repita a senha.',
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                    obscureText: true,
+                  Observer(
+                    builder: (_) {
+                      return TextField(
+                        enabled: !signUpStore.loading,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          isDense: true,
+                          errorText: signUpStore.confirmPassError,
+                        ),
+                        obscureText: true,
+                        onChanged: signUpStore.setConfirmPass,
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 12),
-                    height: 40,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orange,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                  Observer(
+                    builder: (_) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(vertical: 12),
+                        height: 40,
+                        child: ElevatedButton(
+                          onPressed: signUpStore.signUpPressed,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.orange,
+                            onSurface: Colors.orange.withAlpha(120),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          child: signUpStore.loading
+                              ? const CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation(
+                                    Colors.white,
+                                  ),
+                                )
+                              : const Text("CADASTRAR"),
                         ),
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      child: const Text("CADASTRAR"),
-                    ),
+                      );
+                    },
                   ),
                   const Divider(
                     color: Colors.black38,
