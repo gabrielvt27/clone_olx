@@ -20,7 +20,7 @@ Future<void> initializeParse() async {
   Parse().initialize(
     kAppId,
     kServerUrl,
-    clientKey: kServerUrl,
+    clientKey: kClientKey,
     autoSendSessionId: true,
     debug: true,
   );
