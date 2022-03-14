@@ -1,4 +1,5 @@
 import 'package:clone_olx/appwidget.dart';
+import 'package:clone_olx/constants.dart';
 import 'package:clone_olx/stores/page_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -17,9 +18,9 @@ void setupLocators() {
 
 Future<void> initializeParse() async {
   Parse().initialize(
-    'obje0rG4oYWBE7QUzNiXquPqW8S817IijhiVcvMi',
-    'https://parseapi.back4app.com/',
-    clientKey: 'JDDGsyjLeLbv9zVkdL2wR5oHDdf0WevNzbuOnlLG',
+    kAppId,
+    kServerUrl,
+    clientKey: kServerUrl,
     autoSendSessionId: true,
     debug: true,
   );
