@@ -1,7 +1,7 @@
 import 'package:clone_olx/models/user.dart';
 
-class UserViewModel {
-  UserViewModel({
+class UserSigupViewModel {
+  UserSigupViewModel({
     required this.name,
     required this.email,
     required this.phone,

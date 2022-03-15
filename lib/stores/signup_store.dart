@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:clone_olx/repositories/user_repository.dart';
-import 'package:clone_olx/view_model/user_view_model.dart';
+import 'package:clone_olx/stores/user_manager_store.dart';
+import 'package:clone_olx/view_model/user_signup_view_model.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:clone_olx/helpers/extensions.dart';
 
@@ -126,8 +128,9 @@ abstract class _SignupStoreBase with Store {
   @action
   Future<void> _signUp() async {
     loading = true;
+    error = null;
 
-    final user = UserViewModel(
+    final user = UserSigupViewModel(
       name: name!,
       email: email!,
       phone: phone!,
@@ -136,7 +139,7 @@ abstract class _SignupStoreBase with Store {
 
     try {
       final resultUser = await UserRepository().signUp(user);
-      print(resultUser);
+      GetIt.I<UserManagerStore>().setUser(resultUser);
     } catch (e) {
       error = e.toString();
     }
