@@ -1,5 +1,6 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:clone_olx/components/custom_drawer/custom_drawer.dart';
+import 'package:clone_olx/screens/advertisement/components/images_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,6 +24,7 @@ class AdvertisementScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Card(
+        clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
@@ -31,6 +33,7 @@ class AdvertisementScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            ImagesField(),
             TextFormField(
               decoration: InputDecoration(
                 labelText: "Título *",
