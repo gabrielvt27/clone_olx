@@ -1,3 +1,4 @@
+import 'package:clone_olx/screens/advertisement/advertisement_screen.dart';
 import 'package:clone_olx/screens/home/home_screen.dart';
 import 'package:clone_olx/stores/page_store.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +35,7 @@ class _BaseScreenState extends State<BaseScreen> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const HomeScreen(),
-          Container(
-            color: Colors.green,
-          ),
+          const AdvertisementScreen(),
           Container(
             color: Colors.yellow,
           ),
