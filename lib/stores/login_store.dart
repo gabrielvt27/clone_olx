@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:clone_olx/repositories/user_repository.dart';
 import 'package:clone_olx/stores/user_manager_store.dart';
-import 'package:clone_olx/view_model/user_login_view_model.dart';
+import 'package:clone_olx/view_models/user_login_view_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 

@@ -1,8 +1,8 @@
 import 'package:clone_olx/models/user.dart';
 import 'package:clone_olx/repositories/parse_errors.dart';
 import 'package:clone_olx/repositories/table_keys.dart';
-import 'package:clone_olx/view_model/user_login_view_model.dart';
-import 'package:clone_olx/view_model/user_signup_view_model.dart';
+import 'package:clone_olx/view_models/user_login_view_model.dart';
+import 'package:clone_olx/view_models/user_signup_view_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class UserRepository {
