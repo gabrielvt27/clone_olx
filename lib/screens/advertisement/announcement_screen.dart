@@ -1,11 +1,14 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:clone_olx/components/custom_drawer/custom_drawer.dart';
 import 'package:clone_olx/screens/advertisement/components/images_field.dart';
+import 'package:clone_olx/stores/announcement_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AdvertisementScreen extends StatelessWidget {
-  const AdvertisementScreen({Key? key}) : super(key: key);
+class AnnouncementScreen extends StatelessWidget {
+  AnnouncementScreen({Key? key}) : super(key: key);
+
+  final AnnouncementStore announcementStore = AnnouncementStore();
 
   final labelStyle = const TextStyle(
     fontWeight: FontWeight.w800,
@@ -33,7 +36,9 @@ class AdvertisementScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ImagesField(),
+            ImagesField(
+              announcementStore: announcementStore,
+            ),
             TextFormField(
               decoration: InputDecoration(
                 labelText: "Título *",
