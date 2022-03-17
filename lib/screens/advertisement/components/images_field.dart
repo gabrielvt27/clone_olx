@@ -20,7 +20,7 @@ class ImagesField extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () {
-                if (!Platform.isAndroid) {
+                if (Platform.isAndroid) {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) => ImageSourceModal(),

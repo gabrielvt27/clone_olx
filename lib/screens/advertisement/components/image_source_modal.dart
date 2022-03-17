@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ImageSourceModal extends StatelessWidget {
   const ImageSourceModal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (!Platform.isAndroid) {
+    if (Platform.isAndroid) {
       return BottomSheet(
         onClosing: () {},
         builder: (context) {
@@ -17,11 +18,11 @@ class ImageSourceModal extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextButton(
-                onPressed: () {},
+                onPressed: getFromCamera,
                 child: const Text("Câmera"),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: getFromGallery,
                 child: const Text("Galeria"),
               ),
             ],
@@ -34,15 +35,42 @@ class ImageSourceModal extends StatelessWidget {
         message: const Text("Escolha a origem da foto"),
         actions: [
           CupertinoActionSheetAction(
-            onPressed: () {},
+            onPressed: getFromCamera,
             child: const Text("Câmera"),
           ),
           CupertinoActionSheetAction(
-            onPressed: () {},
+            onPressed: getFromGallery,
             child: const Text("Galeria"),
           ),
         ],
+        cancelButton: CupertinoActionSheetAction(
+          child: const Text(
+            "Cancelar",
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: Navigator.of(context).pop,
+        ),
       );
     }
+  }
+
+  Future<void> getFromCamera() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+
+    final image = File(pickedFile!.path);
+    imageSelected(image);
+  }
+
+  Future<void> getFromGallery() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    final image = File(pickedFile!.path);
+    imageSelected(image);
+  }
+
+  void imageSelected(File image) {
+    print(image.path);
   }
 }
