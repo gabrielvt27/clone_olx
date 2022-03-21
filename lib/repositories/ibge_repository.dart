@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IBGERepository {
-  Future<List<UF>> getUFListFromApi() async {
+  Future<List<UF>> getUFList() async {
     final preferences = await SharedPreferences.getInstance();
 
     String? ufListCache = preferences.getString('UF_LIST');

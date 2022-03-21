@@ -14,4 +14,9 @@ class UF {
         sigla: json['sigla'],
         nome: json['nome'],
       );
+
+  @override
+  String toString() {
+    return 'UF:{id: $id, sigla: $sigla, nome: $nome}';
+  }
 }

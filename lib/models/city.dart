@@ -1,9 +1,9 @@
 class City {
-  int id;
+  int? id;
   String nome;
 
   City({
-    required this.id,
+    this.id,
     required this.nome,
   });
 
@@ -11,4 +11,9 @@ class City {
         id: json['id'],
         nome: json['nome'],
       );
+
+  @override
+  String toString() {
+    return 'City:{id: $id, nome: $nome}';
+  }
 }
