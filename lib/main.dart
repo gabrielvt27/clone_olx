@@ -17,6 +17,7 @@ void main() async {
 void setupLocators() {
   GetIt.I.registerSingleton(PageStore());
   GetIt.I.registerSingleton(UserManagerStore());
+  //@TODO: revisar a chamada ao parse server ao instanciar a classe
   GetIt.I.registerSingleton(CategoryStore());
 }
 
