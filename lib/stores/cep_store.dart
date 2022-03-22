@@ -17,14 +17,13 @@ abstract class _CepStoreBase with Store {
   }
 
   @observable
-  String? cep;
+  String cep = '';
 
   @action
   void setCep(String value) => cep = value;
 
   @computed
-  String get clearCep =>
-      (cep == null) ? '' : cep!.replaceAll(RegExp('[^0-9]'), '');
+  String get clearCep => cep.replaceAll(RegExp('[^0-9]'), '');
 
   @observable
   Address? address;
