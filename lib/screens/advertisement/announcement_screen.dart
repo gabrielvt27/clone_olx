@@ -37,6 +37,7 @@ class AnnouncementScreen extends StatelessWidget {
         elevation: 8,
         margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
             ImagesField(
@@ -76,6 +77,18 @@ class AnnouncementScreen extends StatelessWidget {
             ),
             HidePhoneField(
               announcementStore: announcementStore,
+            ),
+            MaterialButton(
+              height: 50,
+              color: Colors.orange,
+              disabledColor: Colors.orange.withAlpha(120),
+              child: const Text(
+                'Enviar',
+                style: TextStyle(fontSize: 18),
+              ),
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              textColor: Colors.white,
+              onPressed: () {},
             ),
           ],
         ),
