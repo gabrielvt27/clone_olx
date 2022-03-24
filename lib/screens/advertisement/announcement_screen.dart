@@ -2,6 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:clone_olx/components/custom_drawer/custom_drawer.dart';
 import 'package:clone_olx/screens/advertisement/components/category_field.dart';
 import 'package:clone_olx/screens/advertisement/components/cep_field.dart';
+import 'package:clone_olx/screens/advertisement/components/hide_phone_field.dart';
 import 'package:clone_olx/screens/advertisement/components/images_field.dart';
 import 'package:clone_olx/stores/announcement_store.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,9 @@ class AnnouncementScreen extends StatelessWidget {
                 contentPadding: contentPadding,
                 prefixText: "R\$ ",
               ),
+            ),
+            HidePhoneField(
+              announcementStore: announcementStore,
             ),
           ],
         ),
