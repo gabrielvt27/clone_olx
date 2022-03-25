@@ -7,6 +7,7 @@ import 'package:clone_olx/screens/advertisement/components/images_field.dart';
 import 'package:clone_olx/stores/announcement_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AnnouncementScreen extends StatelessWidget {
   AnnouncementScreen({Key? key}) : super(key: key);
@@ -29,68 +30,82 @@ class AnnouncementScreen extends StatelessWidget {
         title: const Text('Criar Anúncio'),
         centerTitle: true,
       ),
-      body: Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        elevation: 8,
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ImagesField(
-              announcementStore: announcementStore,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: "Título *",
-                labelStyle: labelStyle,
-                contentPadding: contentPadding,
-              ),
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: "Descrição *",
-                labelStyle: labelStyle,
-                contentPadding: contentPadding,
-              ),
-              maxLines: null,
-            ),
-            CategoryField(
-              announcementStore: announcementStore,
-            ),
-            CepField(),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                CentavosInputFormatter(),
+            elevation: 8,
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ImagesField(
+                  announcementStore: announcementStore,
+                ),
+                Observer(
+                  builder: (_) {
+                    return TextFormField(
+                      onChanged: announcementStore.setTitle,
+                      decoration: InputDecoration(
+                        labelText: "Título *",
+                        labelStyle: labelStyle,
+                        contentPadding: contentPadding,
+                        errorText: announcementStore.titleError,
+                      ),
+                    );
+                  },
+                ),
+                Observer(builder: (_) {
+                  return TextFormField(
+                    onChanged: announcementStore.setDescription,
+                    decoration: InputDecoration(
+                      labelText: "Descrição *",
+                      labelStyle: labelStyle,
+                      contentPadding: contentPadding,
+                      errorText: announcementStore.descriptionError,
+                    ),
+                    maxLines: null,
+                  );
+                }),
+                CategoryField(
+                  announcementStore: announcementStore,
+                ),
+                CepField(),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    CentavosInputFormatter(),
+                  ],
+                  decoration: InputDecoration(
+                    labelText: "Preço *",
+                    labelStyle: labelStyle,
+                    contentPadding: contentPadding,
+                    prefixText: "R\$ ",
+                  ),
+                ),
+                HidePhoneField(
+                  announcementStore: announcementStore,
+                ),
+                MaterialButton(
+                  height: 50,
+                  color: Colors.orange,
+                  disabledColor: Colors.orange.withAlpha(120),
+                  child: const Text(
+                    'Enviar',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  textColor: Colors.white,
+                  onPressed: () {},
+                ),
               ],
-              decoration: InputDecoration(
-                labelText: "Preço *",
-                labelStyle: labelStyle,
-                contentPadding: contentPadding,
-                prefixText: "R\$ ",
-              ),
             ),
-            HidePhoneField(
-              announcementStore: announcementStore,
-            ),
-            MaterialButton(
-              height: 50,
-              color: Colors.orange,
-              disabledColor: Colors.orange.withAlpha(120),
-              child: const Text(
-                'Enviar',
-                style: TextStyle(fontSize: 18),
-              ),
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              textColor: Colors.white,
-              onPressed: () {},
-            ),
-          ],
+          ),
         ),
       ),
     );

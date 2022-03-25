@@ -9,6 +9,79 @@ part of 'announcement_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
+  Computed<bool>? _$imagesValidComputed;
+
+  @override
+  bool get imagesValid =>
+      (_$imagesValidComputed ??= Computed<bool>(() => super.imagesValid,
+              name: '_AnnouncementStoreBase.imagesValid'))
+          .value;
+  Computed<String>? _$imagesErrorComputed;
+
+  @override
+  String get imagesError =>
+      (_$imagesErrorComputed ??= Computed<String>(() => super.imagesError,
+              name: '_AnnouncementStoreBase.imagesError'))
+          .value;
+  Computed<bool>? _$titleValidComputed;
+
+  @override
+  bool get titleValid =>
+      (_$titleValidComputed ??= Computed<bool>(() => super.titleValid,
+              name: '_AnnouncementStoreBase.titleValid'))
+          .value;
+  Computed<String?>? _$titleErrorComputed;
+
+  @override
+  String? get titleError =>
+      (_$titleErrorComputed ??= Computed<String?>(() => super.titleError,
+              name: '_AnnouncementStoreBase.titleError'))
+          .value;
+  Computed<bool>? _$descriptionValidComputed;
+
+  @override
+  bool get descriptionValid => (_$descriptionValidComputed ??= Computed<bool>(
+          () => super.descriptionValid,
+          name: '_AnnouncementStoreBase.descriptionValid'))
+      .value;
+  Computed<String?>? _$descriptionErrorComputed;
+
+  @override
+  String? get descriptionError => (_$descriptionErrorComputed ??=
+          Computed<String?>(() => super.descriptionError,
+              name: '_AnnouncementStoreBase.descriptionError'))
+      .value;
+
+  final _$titleAtom = Atom(name: '_AnnouncementStoreBase.title');
+
+  @override
+  String get title {
+    _$titleAtom.reportRead();
+    return super.title;
+  }
+
+  @override
+  set title(String value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
+  final _$descriptionAtom = Atom(name: '_AnnouncementStoreBase.description');
+
+  @override
+  String get description {
+    _$descriptionAtom.reportRead();
+    return super.description;
+  }
+
+  @override
+  set description(String value) {
+    _$descriptionAtom.reportWrite(value, super.description, () {
+      super.description = value;
+    });
+  }
+
   final _$categoryAtom = Atom(name: '_AnnouncementStoreBase.category');
 
   @override
@@ -43,6 +116,28 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
       ActionController(name: '_AnnouncementStoreBase');
 
   @override
+  void setTitle(String value) {
+    final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(
+        name: '_AnnouncementStoreBase.setTitle');
+    try {
+      return super.setTitle(value);
+    } finally {
+      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDescription(String value) {
+    final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(
+        name: '_AnnouncementStoreBase.setDescription');
+    try {
+      return super.setDescription(value);
+    } finally {
+      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCategory(Category value) {
     final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(
         name: '_AnnouncementStoreBase.setCategory');
@@ -67,8 +162,16 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   @override
   String toString() {
     return '''
+title: ${title},
+description: ${description},
 category: ${category},
-hidePhone: ${hidePhone}
+hidePhone: ${hidePhone},
+imagesValid: ${imagesValid},
+imagesError: ${imagesError},
+titleValid: ${titleValid},
+titleError: ${titleError},
+descriptionValid: ${descriptionValid},
+descriptionError: ${descriptionError}
     ''';
   }
 }

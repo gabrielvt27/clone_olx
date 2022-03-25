@@ -7,6 +7,58 @@ class AnnouncementStore = _AnnouncementStoreBase with _$AnnouncementStore;
 abstract class _AnnouncementStoreBase with Store {
   ObservableList images = ObservableList();
 
+  @computed
+  bool get imagesValid => images.isNotEmpty;
+
+  @computed
+  String get imagesError {
+    if (imagesValid) {
+      return '';
+    } else {
+      return 'Insira imagens';
+    }
+  }
+
+  @observable
+  String title = '';
+
+  @action
+  void setTitle(String value) => title = value;
+
+  @computed
+  bool get titleValid => title.length >= 6;
+
+  @computed
+  String? get titleError {
+    if (titleValid) {
+      return null;
+    } else if (title.isEmpty) {
+      return 'Campo obrigatório';
+    } else {
+      return 'Título muito curto';
+    }
+  }
+
+  @observable
+  String description = '';
+
+  @action
+  void setDescription(String value) => description = value;
+
+  @computed
+  bool get descriptionValid => description.length >= 10;
+
+  @computed
+  String? get descriptionError {
+    if (descriptionValid) {
+      return null;
+    } else if (description.isEmpty) {
+      return 'Campo obrigatório';
+    } else {
+      return 'Descrição muito curta';
+    }
+  }
+
   @observable
   Category? category;
 
