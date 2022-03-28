@@ -155,7 +155,14 @@ abstract class _AnnouncementStoreBase with Store {
 
   VoidCallback? get sendPressed => formValid ? _send : null;
 
-  void _send() {
+  @observable
+  bool loading = false;
+
+  @observable
+  String? errorSend;
+
+  @action
+  Future<void> _send() async {
     final user = GetIt.I<UserManagerStore>().user;
 
     final announcement = AnnouncementViewModel(
@@ -169,6 +176,14 @@ abstract class _AnnouncementStoreBase with Store {
       user: user!,
     );
 
-    AnnouncementRepository().save(announcement);
+    loading = true;
+    errorSend = null;
+    try {
+      final response = await AnnouncementRepository().save(announcement);
+    } catch (e) {
+      errorSend = e.toString();
+    }
+
+    loading = false;
   }
 }

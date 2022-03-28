@@ -43,6 +43,7 @@ dependencies:
   image_cropper:
   dio:
   shared_preferences:
+  path:
 
 dev_dependencies:
   flutter_test:

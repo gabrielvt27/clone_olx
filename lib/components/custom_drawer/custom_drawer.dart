@@ -1,9 +1,13 @@
 import 'package:clone_olx/components/custom_drawer/custom_drawer_header.dart';
 import 'package:clone_olx/components/custom_drawer/page_section.dart';
+import 'package:clone_olx/stores/user_manager_store.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
+  CustomDrawer({Key? key}) : super(key: key);
+
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class CustomDrawer extends StatelessWidget {
           child: ListView(
             children: [
               CustomDrawerHeader(),
-              PageSection(),
+              if (userManagerStore.isLoggedIn) PageSection(),
             ],
           ),
         ),
