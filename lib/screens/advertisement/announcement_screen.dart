@@ -97,18 +97,20 @@ class AnnouncementScreen extends StatelessWidget {
                 HidePhoneField(
                   announcementStore: announcementStore,
                 ),
-                MaterialButton(
-                  height: 50,
-                  color: Colors.orange,
-                  disabledColor: Colors.orange.withAlpha(120),
-                  child: const Text(
-                    'Enviar',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  textColor: Colors.white,
-                  onPressed: () {},
-                ),
+                Observer(builder: (_) {
+                  return MaterialButton(
+                    height: 50,
+                    color: Colors.orange,
+                    disabledColor: Colors.orange.withAlpha(120),
+                    child: const Text(
+                      'Enviar',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    textColor: Colors.white,
+                    onPressed: announcementStore.sendPressed,
+                  );
+                }),
               ],
             ),
           ),

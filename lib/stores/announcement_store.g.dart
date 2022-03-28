@@ -51,6 +51,20 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
           Computed<String?>(() => super.descriptionError,
               name: '_AnnouncementStoreBase.descriptionError'))
       .value;
+  Computed<bool>? _$categoryValidComputed;
+
+  @override
+  bool get categoryValid =>
+      (_$categoryValidComputed ??= Computed<bool>(() => super.categoryValid,
+              name: '_AnnouncementStoreBase.categoryValid'))
+          .value;
+  Computed<String?>? _$categoryErrorComputed;
+
+  @override
+  String? get categoryError =>
+      (_$categoryErrorComputed ??= Computed<String?>(() => super.categoryError,
+              name: '_AnnouncementStoreBase.categoryError'))
+          .value;
   Computed<Address?>? _$addressComputed;
 
   @override
@@ -91,6 +105,13 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   String? get priceError =>
       (_$priceErrorComputed ??= Computed<String?>(() => super.priceError,
               name: '_AnnouncementStoreBase.priceError'))
+          .value;
+  Computed<bool>? _$formValidComputed;
+
+  @override
+  bool get formValid =>
+      (_$formValidComputed ??= Computed<bool>(() => super.formValid,
+              name: '_AnnouncementStoreBase.formValid'))
           .value;
 
   final _$titleAtom = Atom(name: '_AnnouncementStoreBase.title');
@@ -240,12 +261,15 @@ titleValid: ${titleValid},
 titleError: ${titleError},
 descriptionValid: ${descriptionValid},
 descriptionError: ${descriptionError},
+categoryValid: ${categoryValid},
+categoryError: ${categoryError},
 address: ${address},
 addressValid: ${addressValid},
 addressError: ${addressError},
 price: ${price},
 priceValid: ${priceValid},
-priceError: ${priceError}
+priceError: ${priceError},
+formValid: ${formValid}
     ''';
   }
 }

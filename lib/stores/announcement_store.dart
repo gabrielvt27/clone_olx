@@ -1,6 +1,7 @@
 import 'package:clone_olx/models/address.dart';
 import 'package:clone_olx/models/category.dart';
 import 'package:clone_olx/stores/cep_store.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 part 'announcement_store.g.dart';
 
@@ -67,6 +68,18 @@ abstract class _AnnouncementStoreBase with Store {
   @action
   void setCategory(Category value) => category = value;
 
+  @computed
+  bool get categoryValid => category != null;
+
+  @computed
+  String? get categoryError {
+    if (categoryValid) {
+      return null;
+    } else {
+      return 'Campo obrigatório';
+    }
+  }
+
   @observable
   bool? hidePhone = false;
 
@@ -120,4 +133,17 @@ abstract class _AnnouncementStoreBase with Store {
       return 'Preço inválido';
     }
   }
+
+  @computed
+  bool get formValid =>
+      imagesValid &&
+      titleValid &&
+      descriptionValid &&
+      categoryValid &&
+      addressValid &&
+      priceValid;
+
+  VoidCallback? get sendPressed => formValid ? _send : null;
+
+  void _send() {}
 }
