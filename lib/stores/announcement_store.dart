@@ -1,7 +1,11 @@
 import 'package:clone_olx/models/address.dart';
 import 'package:clone_olx/models/category.dart';
+import 'package:clone_olx/repositories/announcement_repository.dart';
 import 'package:clone_olx/stores/cep_store.dart';
+import 'package:clone_olx/stores/user_manager_store.dart';
+import 'package:clone_olx/view_models/announcement_view_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 part 'announcement_store.g.dart';
 
@@ -15,7 +19,7 @@ abstract class _AnnouncementStoreBase with Store {
 
   @computed
   String get imagesError {
-    if (imagesValid) {
+    if (!showErrors || imagesValid) {
       return '';
     } else {
       return 'Insira imagens';
@@ -33,7 +37,7 @@ abstract class _AnnouncementStoreBase with Store {
 
   @computed
   String? get titleError {
-    if (titleValid) {
+    if (!showErrors || titleValid) {
       return null;
     } else if (title.isEmpty) {
       return 'Campo obrigatório';
@@ -53,7 +57,7 @@ abstract class _AnnouncementStoreBase with Store {
 
   @computed
   String? get descriptionError {
-    if (descriptionValid) {
+    if (!showErrors || descriptionValid) {
       return null;
     } else if (description.isEmpty) {
       return 'Campo obrigatório';
@@ -73,7 +77,7 @@ abstract class _AnnouncementStoreBase with Store {
 
   @computed
   String? get categoryError {
-    if (categoryValid) {
+    if (!showErrors || categoryValid) {
       return null;
     } else {
       return 'Campo obrigatório';
@@ -81,10 +85,10 @@ abstract class _AnnouncementStoreBase with Store {
   }
 
   @observable
-  bool? hidePhone = false;
+  bool hidePhone = false;
 
   @action
-  void setHidePhone(bool? value) => hidePhone = value;
+  void setHidePhone(bool? value) => hidePhone = value!;
 
   CepStore cepStore = CepStore();
 
@@ -96,7 +100,7 @@ abstract class _AnnouncementStoreBase with Store {
 
   @computed
   String? get addressError {
-    if (addressValid) {
+    if (!showErrors || addressValid) {
       return null;
     } else {
       return 'Campo obrigatório';
@@ -125,7 +129,7 @@ abstract class _AnnouncementStoreBase with Store {
 
   @computed
   String? get priceError {
-    if (priceValid) {
+    if (!showErrors || priceValid) {
       return null;
     } else if (priceText.isEmpty) {
       return 'Campo obrigatório';
@@ -133,6 +137,12 @@ abstract class _AnnouncementStoreBase with Store {
       return 'Preço inválido';
     }
   }
+
+  @observable
+  bool showErrors = false;
+
+  @action
+  void invalidSendPressed() => showErrors = true;
 
   @computed
   bool get formValid =>
@@ -145,5 +155,20 @@ abstract class _AnnouncementStoreBase with Store {
 
   VoidCallback? get sendPressed => formValid ? _send : null;
 
-  void _send() {}
+  void _send() {
+    final user = GetIt.I<UserManagerStore>().user;
+
+    final announcement = AnnouncementViewModel(
+      images: images,
+      title: title,
+      description: description,
+      category: category!,
+      address: address!,
+      price: price!,
+      hidePhone: hidePhone,
+      user: user!,
+    );
+
+    AnnouncementRepository().save(announcement);
+  }
 }

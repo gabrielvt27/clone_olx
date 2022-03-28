@@ -98,17 +98,20 @@ class AnnouncementScreen extends StatelessWidget {
                   announcementStore: announcementStore,
                 ),
                 Observer(builder: (_) {
-                  return MaterialButton(
-                    height: 50,
-                    color: Colors.orange,
-                    disabledColor: Colors.orange.withAlpha(120),
-                    child: const Text(
-                      'Enviar',
-                      style: TextStyle(fontSize: 18),
+                  return GestureDetector(
+                    onTap: announcementStore.invalidSendPressed,
+                    child: MaterialButton(
+                      height: 50,
+                      color: Colors.orange,
+                      disabledColor: Colors.orange.withAlpha(120),
+                      child: const Text(
+                        'Enviar',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      textColor: Colors.white,
+                      onPressed: announcementStore.sendPressed,
                     ),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    textColor: Colors.white,
-                    onPressed: announcementStore.sendPressed,
                   );
                 }),
               ],

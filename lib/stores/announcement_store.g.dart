@@ -162,13 +162,13 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   final _$hidePhoneAtom = Atom(name: '_AnnouncementStoreBase.hidePhone');
 
   @override
-  bool? get hidePhone {
+  bool get hidePhone {
     _$hidePhoneAtom.reportRead();
     return super.hidePhone;
   }
 
   @override
-  set hidePhone(bool? value) {
+  set hidePhone(bool value) {
     _$hidePhoneAtom.reportWrite(value, super.hidePhone, () {
       super.hidePhone = value;
     });
@@ -186,6 +186,21 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   set priceText(String value) {
     _$priceTextAtom.reportWrite(value, super.priceText, () {
       super.priceText = value;
+    });
+  }
+
+  final _$showErrorsAtom = Atom(name: '_AnnouncementStoreBase.showErrors');
+
+  @override
+  bool get showErrors {
+    _$showErrorsAtom.reportRead();
+    return super.showErrors;
+  }
+
+  @override
+  set showErrors(bool value) {
+    _$showErrorsAtom.reportWrite(value, super.showErrors, () {
+      super.showErrors = value;
     });
   }
 
@@ -248,6 +263,17 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   }
 
   @override
+  void invalidSendPressed() {
+    final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(
+        name: '_AnnouncementStoreBase.invalidSendPressed');
+    try {
+      return super.invalidSendPressed();
+    } finally {
+      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 title: ${title},
@@ -255,6 +281,7 @@ description: ${description},
 category: ${category},
 hidePhone: ${hidePhone},
 priceText: ${priceText},
+showErrors: ${showErrors},
 imagesValid: ${imagesValid},
 imagesError: ${imagesError},
 titleValid: ${titleValid},
