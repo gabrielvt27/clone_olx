@@ -26,7 +26,7 @@ class IBGERepository {
 
         return response.data!.map<UF>((uf) => UF.fromJson(uf)).toList()
           ..sort(
-              (a, b) => a.nome.toLowerCase().compareTo(b.nome.toLowerCase()));
+              (a, b) => a.nome!.toLowerCase().compareTo(b.nome!.toLowerCase()));
       } on DioError {
         return Future.error('Falha ao obter lista de estados');
       }

@@ -6,14 +6,31 @@ import 'package:clone_olx/screens/advertisement/components/cep_field.dart';
 import 'package:clone_olx/screens/advertisement/components/hide_phone_field.dart';
 import 'package:clone_olx/screens/advertisement/components/images_field.dart';
 import 'package:clone_olx/stores/announcement_store.dart';
+import 'package:clone_olx/stores/page_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 
-class AnnouncementScreen extends StatelessWidget {
-  AnnouncementScreen({Key? key}) : super(key: key);
+class AnnouncementScreen extends StatefulWidget {
+  const AnnouncementScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AnnouncementScreen> createState() => _AnnouncementScreenState();
+}
+
+class _AnnouncementScreenState extends State<AnnouncementScreen> {
   final AnnouncementStore announcementStore = AnnouncementStore();
+
+  @override
+  void initState() {
+    super.initState();
+
+    when((_) => announcementStore.savedAd != null, () {
+      GetIt.I<PageStore>().setPage(0);
+    });
+  }
 
   final labelStyle = const TextStyle(
     fontWeight: FontWeight.w800,

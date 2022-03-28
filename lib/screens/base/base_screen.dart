@@ -35,7 +35,7 @@ class _BaseScreenState extends State<BaseScreen> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const HomeScreen(),
-          AnnouncementScreen(),
+          const AnnouncementScreen(),
           Container(
             color: Colors.yellow,
           ),

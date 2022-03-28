@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clone_olx/models/announcement.dart';
 import 'package:clone_olx/repositories/parse_errors.dart';
 import 'package:clone_olx/repositories/table_keys.dart';
 import 'package:clone_olx/view_models/announcement_view_model.dart';
@@ -8,7 +9,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:path/path.dart' as path;
 
 class AnnouncementRepository {
-  Future<void> save(AnnouncementViewModel ad) async {
+  Future<Announcement?> save(AnnouncementViewModel ad) async {
     try {
       final parseImages = await saveImages(ad.images);
 
@@ -29,7 +30,7 @@ class AnnouncementRepository {
       adObject.set<bool>(keyAdHidePhone, ad.hidePhone);
       adObject.set<String>(keyAdDistrict, ad.address.district);
       adObject.set<String>(keyAdCity, ad.address.city.nome);
-      adObject.set<String>(keyAdFederativeUnit, ad.address.uf.sigla);
+      adObject.set<String>(keyAdFederativeUnit, ad.address.uf.sigla!);
       adObject.set<String>(keyAdPostalCode, ad.address.cep);
       adObject.set<List<ParseFile>>(keyAdImages, parseImages);
       adObject.set<ParseUser>(keyAdOwner, parseUser);
@@ -39,7 +40,7 @@ class AnnouncementRepository {
       final response = await adObject.save();
 
       if (response.success) {
-        return response.result;
+        return Announcement.fromParse(response.result);
       } else {
         Future.error(ParseErrors.getDescription(response.error!.code));
       }
