@@ -74,20 +74,26 @@ class AnnouncementScreen extends StatelessWidget {
                 CategoryField(
                   announcementStore: announcementStore,
                 ),
-                CepField(),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    CentavosInputFormatter(),
-                  ],
-                  decoration: InputDecoration(
-                    labelText: "Preço *",
-                    labelStyle: labelStyle,
-                    contentPadding: contentPadding,
-                    prefixText: "R\$ ",
-                  ),
+                CepField(
+                  announcementStore: announcementStore,
                 ),
+                Observer(builder: (_) {
+                  return TextFormField(
+                    onChanged: announcementStore.setPrice,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      CentavosInputFormatter(),
+                    ],
+                    decoration: InputDecoration(
+                      labelText: "Preço *",
+                      labelStyle: labelStyle,
+                      contentPadding: contentPadding,
+                      prefixText: "R\$ ",
+                      errorText: announcementStore.priceError,
+                    ),
+                  );
+                }),
                 HidePhoneField(
                   announcementStore: announcementStore,
                 ),

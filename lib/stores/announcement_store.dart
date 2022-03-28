@@ -1,4 +1,6 @@
+import 'package:clone_olx/models/address.dart';
 import 'package:clone_olx/models/category.dart';
+import 'package:clone_olx/stores/cep_store.dart';
 import 'package:mobx/mobx.dart';
 part 'announcement_store.g.dart';
 
@@ -70,4 +72,52 @@ abstract class _AnnouncementStoreBase with Store {
 
   @action
   void setHidePhone(bool? value) => hidePhone = value;
+
+  CepStore cepStore = CepStore();
+
+  @computed
+  Address? get address => cepStore.address;
+
+  @computed
+  bool get addressValid => address != null;
+
+  @computed
+  String? get addressError {
+    if (addressValid) {
+      return null;
+    } else {
+      return 'Campo obrigatório';
+    }
+  }
+
+  @observable
+  String priceText = '';
+
+  @action
+  void setPrice(String value) => priceText = value;
+
+  @computed
+  num? get price {
+    if (priceText.isEmpty) {
+      return null;
+    } else if (priceText.contains(',')) {
+      return num.tryParse(priceText.replaceAll(RegExp('[^0-9]'), ''))! / 100;
+    } else {
+      return num.tryParse(priceText);
+    }
+  }
+
+  @computed
+  bool get priceValid => price != null && price! <= 9999999;
+
+  @computed
+  String? get priceError {
+    if (priceValid) {
+      return null;
+    } else if (priceText.isEmpty) {
+      return 'Campo obrigatório';
+    } else {
+      return 'Preço inválido';
+    }
+  }
 }

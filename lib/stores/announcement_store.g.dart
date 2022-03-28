@@ -51,6 +51,47 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
           Computed<String?>(() => super.descriptionError,
               name: '_AnnouncementStoreBase.descriptionError'))
       .value;
+  Computed<Address?>? _$addressComputed;
+
+  @override
+  Address? get address =>
+      (_$addressComputed ??= Computed<Address?>(() => super.address,
+              name: '_AnnouncementStoreBase.address'))
+          .value;
+  Computed<bool>? _$addressValidComputed;
+
+  @override
+  bool get addressValid =>
+      (_$addressValidComputed ??= Computed<bool>(() => super.addressValid,
+              name: '_AnnouncementStoreBase.addressValid'))
+          .value;
+  Computed<String?>? _$addressErrorComputed;
+
+  @override
+  String? get addressError =>
+      (_$addressErrorComputed ??= Computed<String?>(() => super.addressError,
+              name: '_AnnouncementStoreBase.addressError'))
+          .value;
+  Computed<num?>? _$priceComputed;
+
+  @override
+  num? get price => (_$priceComputed ??= Computed<num?>(() => super.price,
+          name: '_AnnouncementStoreBase.price'))
+      .value;
+  Computed<bool>? _$priceValidComputed;
+
+  @override
+  bool get priceValid =>
+      (_$priceValidComputed ??= Computed<bool>(() => super.priceValid,
+              name: '_AnnouncementStoreBase.priceValid'))
+          .value;
+  Computed<String?>? _$priceErrorComputed;
+
+  @override
+  String? get priceError =>
+      (_$priceErrorComputed ??= Computed<String?>(() => super.priceError,
+              name: '_AnnouncementStoreBase.priceError'))
+          .value;
 
   final _$titleAtom = Atom(name: '_AnnouncementStoreBase.title');
 
@@ -112,6 +153,21 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     });
   }
 
+  final _$priceTextAtom = Atom(name: '_AnnouncementStoreBase.priceText');
+
+  @override
+  String get priceText {
+    _$priceTextAtom.reportRead();
+    return super.priceText;
+  }
+
+  @override
+  set priceText(String value) {
+    _$priceTextAtom.reportWrite(value, super.priceText, () {
+      super.priceText = value;
+    });
+  }
+
   final _$_AnnouncementStoreBaseActionController =
       ActionController(name: '_AnnouncementStoreBase');
 
@@ -160,18 +216,36 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   }
 
   @override
+  void setPrice(String value) {
+    final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(
+        name: '_AnnouncementStoreBase.setPrice');
+    try {
+      return super.setPrice(value);
+    } finally {
+      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 title: ${title},
 description: ${description},
 category: ${category},
 hidePhone: ${hidePhone},
+priceText: ${priceText},
 imagesValid: ${imagesValid},
 imagesError: ${imagesError},
 titleValid: ${titleValid},
 titleError: ${titleError},
 descriptionValid: ${descriptionValid},
-descriptionError: ${descriptionError}
+descriptionError: ${descriptionError},
+address: ${address},
+addressValid: ${addressValid},
+addressError: ${addressError},
+price: ${price},
+priceValid: ${priceValid},
+priceError: ${priceError}
     ''';
   }
 }
