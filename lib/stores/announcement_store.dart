@@ -1,5 +1,4 @@
 import 'package:clone_olx/models/address.dart';
-import 'package:clone_olx/models/announcement.dart';
 import 'package:clone_olx/models/category.dart';
 import 'package:clone_olx/repositories/announcement_repository.dart';
 import 'package:clone_olx/stores/cep_store.dart';
@@ -163,7 +162,7 @@ abstract class _AnnouncementStoreBase with Store {
   String? errorSend;
 
   @observable
-  Announcement? savedAd;
+  bool savedAd = false;
 
   @action
   Future<void> _send() async {
@@ -183,7 +182,8 @@ abstract class _AnnouncementStoreBase with Store {
     loading = true;
     errorSend = null;
     try {
-      savedAd = await AnnouncementRepository().save(announcement);
+      await AnnouncementRepository().save(announcement);
+      savedAd = true;
     } catch (e) {
       errorSend = e.toString();
     }

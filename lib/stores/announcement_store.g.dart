@@ -204,6 +204,58 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     });
   }
 
+  final _$loadingAtom = Atom(name: '_AnnouncementStoreBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  final _$errorSendAtom = Atom(name: '_AnnouncementStoreBase.errorSend');
+
+  @override
+  String? get errorSend {
+    _$errorSendAtom.reportRead();
+    return super.errorSend;
+  }
+
+  @override
+  set errorSend(String? value) {
+    _$errorSendAtom.reportWrite(value, super.errorSend, () {
+      super.errorSend = value;
+    });
+  }
+
+  final _$savedAdAtom = Atom(name: '_AnnouncementStoreBase.savedAd');
+
+  @override
+  bool get savedAd {
+    _$savedAdAtom.reportRead();
+    return super.savedAd;
+  }
+
+  @override
+  set savedAd(bool value) {
+    _$savedAdAtom.reportWrite(value, super.savedAd, () {
+      super.savedAd = value;
+    });
+  }
+
+  final _$_sendAsyncAction = AsyncAction('_AnnouncementStoreBase._send');
+
+  @override
+  Future<void> _send() {
+    return _$_sendAsyncAction.run(() => super._send());
+  }
+
   final _$_AnnouncementStoreBaseActionController =
       ActionController(name: '_AnnouncementStoreBase');
 
@@ -282,6 +334,9 @@ category: ${category},
 hidePhone: ${hidePhone},
 priceText: ${priceText},
 showErrors: ${showErrors},
+loading: ${loading},
+errorSend: ${errorSend},
+savedAd: ${savedAd},
 imagesValid: ${imagesValid},
 imagesError: ${imagesError},
 titleValid: ${titleValid},

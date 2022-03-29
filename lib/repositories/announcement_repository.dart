@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:clone_olx/models/announcement.dart';
 import 'package:clone_olx/repositories/parse_errors.dart';
 import 'package:clone_olx/repositories/table_keys.dart';
 import 'package:clone_olx/view_models/announcement_view_model.dart';
@@ -9,11 +7,12 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:path/path.dart' as path;
 
 class AnnouncementRepository {
-  Future<Announcement?> save(AnnouncementViewModel ad) async {
+  Future<void> save(AnnouncementViewModel ad) async {
     try {
       final parseImages = await saveImages(ad.images);
 
-      final parseUser = ParseUser('', '', '')..set(keyUserId, ad.user.id);
+      final parseUser = ParseUser(ad.user.name, null, ad.user.email)
+        ..set(keyUserId, ad.user.id);
 
       final adObject = ParseObject(keyAdTable);
 
@@ -39,13 +38,11 @@ class AnnouncementRepository {
 
       final response = await adObject.save();
 
-      if (response.success) {
-        return Announcement.fromParse(response.result);
-      } else {
+      if (!response.success) {
         Future.error(ParseErrors.getDescription(response.error!.code));
       }
     } catch (e) {
-      Future.error('Falha ao salvar anúncio');
+      Future.error('Falha ao salvar anúncio\n${e.toString()}');
     }
   }
 

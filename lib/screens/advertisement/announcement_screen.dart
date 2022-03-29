@@ -27,7 +27,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   void initState() {
     super.initState();
 
-    when((_) => announcementStore.savedAd != null, () {
+    when((_) => announcementStore.savedAd, () {
       GetIt.I<PageStore>().setPage(0);
     });
   }
