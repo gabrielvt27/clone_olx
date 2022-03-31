@@ -1,4 +1,5 @@
 import 'package:clone_olx/screens/filter/components/orderby_field.dart';
+import 'package:clone_olx/screens/filter/components/pricerange_field.dart';
 import 'package:clone_olx/stores/filter_store.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,9 @@ class FilterScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 OrderByField(
+                  filterStore: filterStore,
+                ),
+                PriceRangeField(
                   filterStore: filterStore,
                 ),
               ],
