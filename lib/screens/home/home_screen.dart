@@ -28,58 +28,59 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          drawer: CustomDrawer(),
-          appBar: AppBar(
-            title: Observer(
+        drawer: CustomDrawer(),
+        appBar: AppBar(
+          title: Observer(
+            builder: (_) {
+              if (homeStore.searchText.isEmpty) {
+                return Container();
+              } else {
+                return GestureDetector(
+                  onTap: () => _openSearch(context),
+                  child: LayoutBuilder(
+                    builder: (_, constraints) {
+                      return SizedBox(
+                        width: constraints.biggest.width,
+                        child: Text(homeStore.searchText),
+                      );
+                    },
+                  ),
+                );
+              }
+            },
+          ),
+          actions: [
+            Observer(
               builder: (_) {
                 if (homeStore.searchText.isEmpty) {
-                  return Container();
+                  return IconButton(
+                    onPressed: () {
+                      _openSearch(context);
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                    ),
+                  );
                 } else {
-                  return GestureDetector(
-                    onTap: () => _openSearch(context),
-                    child: LayoutBuilder(
-                      builder: (_, constraints) {
-                        return SizedBox(
-                          width: constraints.biggest.width,
-                          child: Text(homeStore.searchText),
-                        );
-                      },
+                  return IconButton(
+                    onPressed: () {
+                      homeStore.setSearchText('');
+                    },
+                    icon: const Icon(
+                      Icons.clear,
                     ),
                   );
                 }
               },
-            ),
-            actions: [
-              Observer(
-                builder: (_) {
-                  if (homeStore.searchText.isEmpty) {
-                    return IconButton(
-                      onPressed: () {
-                        _openSearch(context);
-                      },
-                      icon: const Icon(
-                        Icons.search,
-                      ),
-                    );
-                  } else {
-                    return IconButton(
-                      onPressed: () {
-                        homeStore.setSearchText('');
-                      },
-                      icon: const Icon(
-                        Icons.clear,
-                      ),
-                    );
-                  }
-                },
-              )
-            ],
-          ),
-          body: Column(
-            children: const [
-              TopBar(),
-            ],
-          )),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            TopBar(),
+          ],
+        ),
+      ),
     );
   }
 }

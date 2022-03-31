@@ -1,3 +1,4 @@
+import 'package:clone_olx/models/category.dart';
 import 'package:mobx/mobx.dart';
 part 'home_store.g.dart';
 
@@ -9,4 +10,10 @@ abstract class _HomeStoreBase with Store {
 
   @action
   void setSearchText(String val) => searchText = val;
+
+  @observable
+  Category? category;
+
+  @action
+  void setCategory(Category val) => category = val;
 }
