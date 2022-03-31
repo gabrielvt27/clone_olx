@@ -52,7 +52,7 @@ class TopBar extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const FilterScreen(),
+                builder: (context) => FilterScreen(),
               ),
             );
           },
