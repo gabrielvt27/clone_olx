@@ -1,12 +1,85 @@
 import 'dart:io';
+import 'package:clone_olx/models/announcement.dart';
+import 'package:clone_olx/models/category.dart';
+import 'package:clone_olx/models/user.dart';
 import 'package:clone_olx/repositories/parse_errors.dart';
 import 'package:clone_olx/repositories/table_keys.dart';
+import 'package:clone_olx/stores/filter_store.dart';
 import 'package:clone_olx/view_models/announcement_view_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 import 'package:path/path.dart' as path;
 
 class AnnouncementRepository {
+  Future<List<Announcement>> getHomeAdList({
+    required FilterStore filter,
+    String? search,
+    Category? category,
+  }) async {
+    final query = QueryBuilder<ParseObject>(ParseObject(keyAdTable));
+
+    query.includeObject([keyAdOwner, keyAdCategory]);
+
+    query.setLimit(20);
+
+    query.whereEqualTo(keyAdStatus, AnnouncementStatus.active.index);
+
+    if (search != null && search.trim().isNotEmpty) {
+      query.whereContains(keyAdTitle, search, caseSensitive: false);
+    }
+
+    if (category != null && category.id != '*') {
+      final parseObjectCategory = ParseObject(keyCategoryTable)
+        ..set(keyCategoryId, category.id);
+      query.whereEqualTo(keyAdCategory, parseObjectCategory.toPointer());
+    }
+
+    switch (filter.orderBy) {
+      case OrderBy.price:
+        query.orderByAscending(keyAdPrice);
+        break;
+      case OrderBy.date:
+      default:
+        query.orderByAscending(keyAdCreatedAt);
+        break;
+    }
+
+    if (filter.minPrice != null && filter.minPrice! > 0) {
+      query.whereGreaterThanOrEqualsTo(keyAdPrice, filter.minPrice);
+    }
+
+    if (filter.maxPrice != null && filter.maxPrice! > 0) {
+      query.whereLessThanOrEqualTo(keyAdPrice, filter.maxPrice);
+    }
+
+    if (filter.vendorType > 0 &&
+        filter.vendorType <
+            (VENDOR_TYPE_PARTICULAR | VENDOR_TYPE_PROFESSIONAL)) {
+      final userQuery = QueryBuilder<ParseUser>(ParseUser.forQuery());
+
+      if (filter.vendorType == VENDOR_TYPE_PARTICULAR) {
+        userQuery.whereEqualTo(keyUserType, UserType.particular.index);
+      }
+
+      if (filter.vendorType == VENDOR_TYPE_PROFESSIONAL) {
+        userQuery.whereEqualTo(keyUserType, UserType.professional.index);
+      }
+
+      query.whereMatchesQuery(keyAdOwner, userQuery);
+    }
+
+    final response = await query.query();
+    if (response.success && response.results != null) {
+      return (response.results as List)
+          .map((po) => Announcement.fromParse(po))
+          .toList();
+    } else if (response.success && response.results == null) {
+      return [];
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
+  }
+
   Future<void> save(AnnouncementViewModel ad) async {
     try {
       final parseImages = await saveImages(ad.images);

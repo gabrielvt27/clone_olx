@@ -61,10 +61,10 @@ class UserRepository {
 
   User mapParseToUser(ParseUser parseUser) {
     return User(
-      id: parseUser.objectId!,
-      name: parseUser.get(keyUserName),
-      email: parseUser.get(keyUserEmail),
-      phone: parseUser.get(keyUserPhone),
+      id: parseUser.objectId ?? '',
+      name: parseUser.get(keyUserName) ?? '',
+      email: parseUser.get(keyUserEmail) ?? '',
+      phone: parseUser.get(keyUserPhone) ?? '',
       type: UserType.values[parseUser.get(keyUserType)],
       createdAt: parseUser.get(keyUserCreatedAt),
     );

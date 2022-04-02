@@ -55,7 +55,7 @@ class Announcement {
       hidePhone: object.get<bool>(keyAdHidePhone)!,
       user: UserRepository().mapParseToUser(object.get<ParseUser>(keyAdOwner)!),
       createAt: object.createdAt!,
-      views: object.get<int>(keyAdViews)!,
+      views: object.get<int>(keyAdViews) ?? 0,
       status: AnnouncementStatus.values[object.get<int>(keyAdStatus)!],
     );
   }
