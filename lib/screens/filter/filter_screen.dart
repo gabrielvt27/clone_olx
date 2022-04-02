@@ -1,5 +1,6 @@
 import 'package:clone_olx/screens/filter/components/orderby_field.dart';
 import 'package:clone_olx/screens/filter/components/pricerange_field.dart';
+import 'package:clone_olx/screens/filter/components/vendortype_field.dart';
 import 'package:clone_olx/stores/filter_store.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,9 @@ class FilterScreen extends StatelessWidget {
                   filterStore: filterStore,
                 ),
                 PriceRangeField(
+                  filterStore: filterStore,
+                ),
+                VendorTypeField(
                   filterStore: filterStore,
                 ),
               ],

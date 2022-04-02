@@ -23,6 +23,20 @@ mixin _$FilterStore on _FilterStoreBase, Store {
       (_$priceErrorComputed ??= Computed<String?>(() => super.priceError,
               name: '_FilterStoreBase.priceError'))
           .value;
+  Computed<bool>? _$isTypeParticularComputed;
+
+  @override
+  bool get isTypeParticular => (_$isTypeParticularComputed ??= Computed<bool>(
+          () => super.isTypeParticular,
+          name: '_FilterStoreBase.isTypeParticular'))
+      .value;
+  Computed<bool>? _$isTypeProfessionalComputed;
+
+  @override
+  bool get isTypeProfessional => (_$isTypeProfessionalComputed ??=
+          Computed<bool>(() => super.isTypeProfessional,
+              name: '_FilterStoreBase.isTypeProfessional'))
+      .value;
 
   final _$orderByAtom = Atom(name: '_FilterStoreBase.orderBy');
 
@@ -69,6 +83,21 @@ mixin _$FilterStore on _FilterStoreBase, Store {
     });
   }
 
+  final _$vendorTypeAtom = Atom(name: '_FilterStoreBase.vendorType');
+
+  @override
+  int get vendorType {
+    _$vendorTypeAtom.reportRead();
+    return super.vendorType;
+  }
+
+  @override
+  set vendorType(int value) {
+    _$vendorTypeAtom.reportWrite(value, super.vendorType, () {
+      super.vendorType = value;
+    });
+  }
+
   final _$_FilterStoreBaseActionController =
       ActionController(name: '_FilterStoreBase');
 
@@ -106,13 +135,49 @@ mixin _$FilterStore on _FilterStoreBase, Store {
   }
 
   @override
+  void selectVendorType(int val) {
+    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
+        name: '_FilterStoreBase.selectVendorType');
+    try {
+      return super.selectVendorType(val);
+    } finally {
+      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setVendorType(int type) {
+    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
+        name: '_FilterStoreBase.setVendorType');
+    try {
+      return super.setVendorType(type);
+    } finally {
+      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetVendorType(int type) {
+    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
+        name: '_FilterStoreBase.resetVendorType');
+    try {
+      return super.resetVendorType(type);
+    } finally {
+      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 orderBy: ${orderBy},
 maxPrice: ${maxPrice},
 minPrice: ${minPrice},
+vendorType: ${vendorType},
 priceValid: ${priceValid},
-priceError: ${priceError}
+priceError: ${priceError},
+isTypeParticular: ${isTypeParticular},
+isTypeProfessional: ${isTypeProfessional}
     ''';
   }
 }
