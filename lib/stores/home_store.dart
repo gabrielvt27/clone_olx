@@ -1,3 +1,4 @@
+import 'package:clone_olx/models/announcement.dart';
 import 'package:clone_olx/models/category.dart';
 import 'package:clone_olx/repositories/announcement_repository.dart';
 import 'package:clone_olx/stores/filter_store.dart';
@@ -9,15 +10,38 @@ class HomeStore = _HomeStoreBase with _$HomeStore;
 abstract class _HomeStoreBase with Store {
   _HomeStoreBase() {
     autorun((_) async {
-      final newAdList = await AnnouncementRepository().getHomeAdList(
-        filter: filterStore,
-        search: searchText,
-        category: category,
-      );
+      try {
+        loading = true;
 
-      print(newAdList);
+        final newAdList = await AnnouncementRepository().getHomeAdList(
+          filter: filterStore,
+          search: searchText,
+          category: category,
+        );
+
+        adList.clear();
+        adList.addAll(newAdList);
+        loading = false;
+        setError(null);
+      } catch (e) {
+        setError(e.toString());
+      }
     });
   }
+
+  ObservableList<Announcement> adList = ObservableList<Announcement>();
+
+  @observable
+  bool loading = false;
+
+  @action
+  void setLoading(bool val) => loading = val;
+
+  @observable
+  String? error;
+
+  @action
+  void setError(String? val) => error = val;
 
   @observable
   String searchText = '';
