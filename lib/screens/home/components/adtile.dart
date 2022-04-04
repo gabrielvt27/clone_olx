@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clone_olx/models/announcement.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:clone_olx/helpers/extensions.dart';
 
 class AdTile extends StatelessWidget {
   const AdTile({
@@ -18,7 +19,7 @@ class AdTile extends StatelessWidget {
         : (ad.images.first as ParseFile).url!;
 
     final String endereco =
-        '${ad.createAt}\n${ad.address.city.nome} - ${ad.address.uf.sigla}';
+        '${ad.createAt.formattedDate()} - ${ad.address.city.nome} - ${ad.address.uf.sigla}';
     return Container(
       margin: const EdgeInsets.symmetric(
         vertical: 6,
@@ -50,7 +51,13 @@ class AdTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(ad.title),
-                  Text('R\$ ${ad.price.toStringAsFixed(2)}'),
+                  Text(
+                    ad.price.formattedMoney(),
+                    style: const TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Text(
                     endereco,
                     style: const TextStyle(

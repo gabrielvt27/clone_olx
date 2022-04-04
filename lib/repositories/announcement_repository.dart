@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:clone_olx/constants.dart';
 import 'package:clone_olx/models/announcement.dart';
 import 'package:clone_olx/models/category.dart';
 import 'package:clone_olx/models/user.dart';
@@ -15,12 +16,14 @@ class AnnouncementRepository {
     required FilterStore filter,
     String? search,
     Category? category,
+    int page = 0,
   }) async {
     final query = QueryBuilder<ParseObject>(ParseObject(keyAdTable));
 
     query.includeObject([keyAdOwner, keyAdCategory]);
 
-    query.setLimit(20);
+    query.setAmountToSkip(page * kMaxAnnouncementByPage);
+    query.setLimit(kMaxAnnouncementByPage);
 
     query.whereEqualTo(keyAdStatus, AnnouncementStatus.active.index);
 

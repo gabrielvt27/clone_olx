@@ -45,6 +45,9 @@ dependencies:
   shared_preferences:
   path:
   cached_network_image:
+  intl:
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
