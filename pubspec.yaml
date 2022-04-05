@@ -44,6 +44,7 @@ dependencies:
   dio:
   shared_preferences:
   path:
+  carousel_nullsafety:
   cached_network_image:
   intl:
   flutter_localizations:
