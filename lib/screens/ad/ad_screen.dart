@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_nullsafety/carousel_nullsafety.dart';
 import 'package:clone_olx/models/announcement.dart';
+import 'package:clone_olx/screens/ad/components/description_panel.dart';
+import 'package:clone_olx/screens/ad/components/location_panel.dart';
 import 'package:clone_olx/screens/ad/components/main_panel.dart';
+import 'package:clone_olx/screens/ad/components/user_panel.dart';
 import 'package:flutter/material.dart';
 
 class AdScreen extends StatelessWidget {
@@ -35,12 +38,17 @@ class AdScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 MainPanel(ad: ad),
                 const Divider(),
+                DescriptionPanel(ad: ad),
+                const Divider(),
+                LocationPanel(ad: ad),
+                const Divider(),
+                UserPanel(ad: ad),
               ],
             ),
           )

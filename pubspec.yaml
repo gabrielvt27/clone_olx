@@ -46,6 +46,7 @@ dependencies:
   path:
   carousel_nullsafety:
   cached_network_image:
+  readmore:
   intl:
   flutter_localizations:
     sdk: flutter
