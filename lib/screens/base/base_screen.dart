@@ -1,3 +1,4 @@
+import 'package:clone_olx/screens/account/account_screen.dart';
 import 'package:clone_olx/screens/advertisement/announcement_screen.dart';
 import 'package:clone_olx/screens/home/home_screen.dart';
 import 'package:clone_olx/stores/page_store.dart';
@@ -42,9 +43,7 @@ class _BaseScreenState extends State<BaseScreen> {
           Container(
             color: Colors.purple,
           ),
-          Container(
-            color: Colors.brown,
-          ),
+          const AccountScreen(),
         ],
       ),
     );
