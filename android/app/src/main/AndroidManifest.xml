@@ -1,5 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.valentin.clone_olx">
+    <queries>
+  <!-- If your app makes calls -->
+  <intent>
+    <action android:name="android.intent.action.DIAL" />
+    <data android:scheme="tel" />
+  </intent>
+
+</queries>
    <application
         android:label="clone_olx"
         android:name="${applicationName}"
@@ -25,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
     android:name="com.yalantis.ucrop.UCropActivity"
     android:screenOrientation="portrait"
