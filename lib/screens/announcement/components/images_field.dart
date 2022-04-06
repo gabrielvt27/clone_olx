@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:clone_olx/screens/advertisement/components/image_dialog.dart';
-import 'package:clone_olx/screens/advertisement/components/image_source_modal.dart';
+import 'package:clone_olx/screens/announcement/components/image_dialog.dart';
+import 'package:clone_olx/screens/announcement/components/image_source_modal.dart';
 import 'package:clone_olx/stores/announcement_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

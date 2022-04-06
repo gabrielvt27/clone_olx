@@ -1,10 +1,10 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:clone_olx/components/custom_drawer/custom_drawer.dart';
 import 'package:clone_olx/components/error_box.dart';
-import 'package:clone_olx/screens/advertisement/components/category_field.dart';
-import 'package:clone_olx/screens/advertisement/components/cep_field.dart';
-import 'package:clone_olx/screens/advertisement/components/hide_phone_field.dart';
-import 'package:clone_olx/screens/advertisement/components/images_field.dart';
+import 'package:clone_olx/screens/announcement/components/category_field.dart';
+import 'package:clone_olx/screens/announcement/components/cep_field.dart';
+import 'package:clone_olx/screens/announcement/components/hide_phone_field.dart';
+import 'package:clone_olx/screens/announcement/components/images_field.dart';
 import 'package:clone_olx/stores/announcement_store.dart';
 import 'package:clone_olx/stores/page_store.dart';
 import 'package:flutter/material.dart';

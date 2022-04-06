@@ -1,0 +1,21 @@
+import 'package:clone_olx/repositories/announcement_repository.dart';
+import 'package:clone_olx/stores/user_manager_store.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
+part 'myads_store.g.dart';
+
+class MyAdsStore = _MyAdsStoreBase with _$MyAdsStore;
+
+abstract class _MyAdsStoreBase with Store {
+  _MyAdsStoreBase() {
+    _getMyAds();
+  }
+
+  Future<void> _getMyAds() async {
+    final user = GetIt.I<UserManagerStore>().user;
+
+    final ads = await AnnouncementRepository().getMyAds(user!);
+
+    print(ads);
+  }
+}

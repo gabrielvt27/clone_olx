@@ -1,5 +1,5 @@
 import 'package:clone_olx/screens/account/account_screen.dart';
-import 'package:clone_olx/screens/advertisement/announcement_screen.dart';
+import 'package:clone_olx/screens/announcement/announcement_screen.dart';
 import 'package:clone_olx/screens/home/home_screen.dart';
 import 'package:clone_olx/stores/page_store.dart';
 import 'package:flutter/material.dart';
