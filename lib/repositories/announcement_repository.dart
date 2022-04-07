@@ -162,7 +162,7 @@ class AnnouncementRepository {
 
     final response = await queryBuilder.query();
     if (response.success && response.results != null) {
-      return (response.results as List)
+      return (response.results as List<ParseObject>)
           .map((ad) => Announcement.fromParse(ad))
           .toList();
     } else if (response.success && response.results == null) {

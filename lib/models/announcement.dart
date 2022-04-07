@@ -21,7 +21,7 @@ class Announcement {
   User user;
   int views;
   DateTime createAt;
-  AnnouncementStatus status = AnnouncementStatus.pending;
+  AnnouncementStatus status;
 
   Announcement({
     required this.id,
@@ -35,7 +35,7 @@ class Announcement {
     required this.user,
     required this.createAt,
     required this.views,
-    status,
+    this.status = AnnouncementStatus.pending,
   });
 
   factory Announcement.fromParse(ParseObject object) {
