@@ -1,4 +1,6 @@
 import 'package:clone_olx/screens/myads/components/active_ad_tile.dart';
+import 'package:clone_olx/screens/myads/components/pending_ad_tile.dart';
+import 'package:clone_olx/screens/myads/components/sold_ad_tile.dart';
 import 'package:clone_olx/stores/myads_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -30,6 +32,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
         centerTitle: true,
         bottom: TabBar(
           controller: tabController,
+          indicatorColor: Colors.orange,
           tabs: const [
             Tab(
               child: Text('ATIVOS'),
@@ -43,28 +46,49 @@ class _MyAdsScreenState extends State<MyAdsScreen>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          Observer(
-            builder: (context) {
-              if (myAdsStore.activeAds.isEmpty) return Container();
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: TabBarView(
+          controller: tabController,
+          children: [
+            Observer(
+              builder: (context) {
+                if (myAdsStore.activeAds.isEmpty) return Container();
 
-              return ListView.builder(
-                itemCount: myAdsStore.activeAds.length,
-                itemBuilder: (context, index) {
-                  return ActiveAdTile(ad: myAdsStore.activeAds[index]);
-                },
-              );
-            },
-          ),
-          Container(
-            color: Colors.green,
-          ),
-          Container(
-            color: Colors.yellow,
-          ),
-        ],
+                return ListView.builder(
+                  itemCount: myAdsStore.activeAds.length,
+                  itemBuilder: (context, index) {
+                    return ActiveAdTile(ad: myAdsStore.activeAds[index]);
+                  },
+                );
+              },
+            ),
+            Observer(
+              builder: (context) {
+                if (myAdsStore.pendingAds.isEmpty) return Container();
+
+                return ListView.builder(
+                  itemCount: myAdsStore.pendingAds.length,
+                  itemBuilder: (context, index) {
+                    return PendingAdTile(ad: myAdsStore.pendingAds[index]);
+                  },
+                );
+              },
+            ),
+            Observer(
+              builder: (context) {
+                if (myAdsStore.soldAds.isEmpty) return Container();
+
+                return ListView.builder(
+                  itemCount: myAdsStore.soldAds.length,
+                  itemBuilder: (context, index) {
+                    return SoldAdTile(ad: myAdsStore.soldAds[index]);
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -41,8 +41,11 @@ class AdScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 16, right: 16, bottom: 110),
+                padding: EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  bottom: ad.status != AnnouncementStatus.pending ? 110 : 16,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -58,7 +61,7 @@ class AdScreen extends StatelessWidget {
               )
             ],
           ),
-          BottomBar(ad: ad),
+          if (ad.status != AnnouncementStatus.pending) BottomBar(ad: ad),
         ],
       ),
     );
