@@ -3,6 +3,7 @@ import 'package:clone_olx/screens/home/components/adtile.dart';
 import 'package:clone_olx/screens/home/components/create_ad_button.dart';
 import 'package:clone_olx/screens/home/components/search_dialog.dart';
 import 'package:clone_olx/screens/home/components/topbar.dart';
+import 'package:clone_olx/screens/myads/components/empty_card.dart';
 import 'package:clone_olx/stores/home_store.dart';
 import 'package:clone_olx/stores/user_manager_store.dart';
 import 'package:flutter/material.dart';
@@ -120,31 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       } else if (homeStore.adList.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.border_clear,
-                                size: 100,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              Text(
-                                "Humm...Nenhum anúncio encontrado!",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                        return const EmptyCard(
+                            text: 'Nenhum anúncio encontrado');
                       } else if (homeStore.showProgress) {
                         return const Center(
                           child: CircularProgressIndicator(

@@ -1,4 +1,5 @@
 import 'package:clone_olx/screens/myads/components/active_ad_tile.dart';
+import 'package:clone_olx/screens/myads/components/empty_card.dart';
 import 'package:clone_olx/screens/myads/components/pending_ad_tile.dart';
 import 'package:clone_olx/screens/myads/components/sold_ad_tile.dart';
 import 'package:clone_olx/stores/myads_store.dart';
@@ -68,7 +69,11 @@ class _MyAdsScreenState extends State<MyAdsScreen>
                   children: [
                     Observer(
                       builder: (context) {
-                        if (myAdsStore.activeAds.isEmpty) return Container();
+                        if (myAdsStore.activeAds.isEmpty) {
+                          return const EmptyCard(
+                            text: 'Você não possui nenhum anúncio ativo!',
+                          );
+                        }
 
                         return ListView.builder(
                           itemCount: myAdsStore.activeAds.length,
@@ -83,7 +88,11 @@ class _MyAdsScreenState extends State<MyAdsScreen>
                     ),
                     Observer(
                       builder: (context) {
-                        if (myAdsStore.pendingAds.isEmpty) return Container();
+                        if (myAdsStore.pendingAds.isEmpty) {
+                          return const EmptyCard(
+                            text: 'Você não possui nenhum anúncio pendente!',
+                          );
+                        }
 
                         return ListView.builder(
                           itemCount: myAdsStore.pendingAds.length,
@@ -96,7 +105,11 @@ class _MyAdsScreenState extends State<MyAdsScreen>
                     ),
                     Observer(
                       builder: (context) {
-                        if (myAdsStore.soldAds.isEmpty) return Container();
+                        if (myAdsStore.soldAds.isEmpty) {
+                          return const EmptyCard(
+                            text: 'Você não possui nenhum anúncio vendido!',
+                          );
+                        }
 
                         return ListView.builder(
                           itemCount: myAdsStore.soldAds.length,
