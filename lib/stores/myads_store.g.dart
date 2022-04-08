@@ -46,6 +46,21 @@ mixin _$MyAdsStore on _MyAdsStoreBase, Store {
     });
   }
 
+  final _$loadingAtom = Atom(name: '_MyAdsStoreBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   final _$_getMyAdsAsyncAction = AsyncAction('_MyAdsStoreBase._getMyAds');
 
   @override
@@ -53,10 +68,25 @@ mixin _$MyAdsStore on _MyAdsStoreBase, Store {
     return _$_getMyAdsAsyncAction.run(() => super._getMyAds());
   }
 
+  final _$soldAdAsyncAction = AsyncAction('_MyAdsStoreBase.soldAd');
+
+  @override
+  Future<void> soldAd(Announcement ad) {
+    return _$soldAdAsyncAction.run(() => super.soldAd(ad));
+  }
+
+  final _$deleteAdAsyncAction = AsyncAction('_MyAdsStoreBase.deleteAd');
+
+  @override
+  Future<void> deleteAd(Announcement ad) {
+    return _$deleteAdAsyncAction.run(() => super.deleteAd(ad));
+  }
+
   @override
   String toString() {
     return '''
 allAds: ${allAds},
+loading: ${loading},
 activeAds: ${activeAds},
 pendingAds: ${pendingAds},
 soldAds: ${soldAds}

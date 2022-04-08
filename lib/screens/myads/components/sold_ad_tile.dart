@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clone_olx/screens/ad/ad_screen.dart';
+import 'package:clone_olx/stores/myads_store.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
@@ -10,9 +11,11 @@ class SoldAdTile extends StatelessWidget {
   const SoldAdTile({
     Key? key,
     required this.ad,
+    required this.store,
   }) : super(key: key);
 
   final Announcement ad;
+  final MyAdsStore store;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +73,34 @@ class SoldAdTile extends StatelessWidget {
               Column(
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Excluir'),
+                          content: Text('Confirmar a exclusão de ${ad.title}?'),
+                          actions: [
+                            TextButton(
+                              onPressed: Navigator.of(context).pop,
+                              child: const Text(
+                                'Não',
+                                style: TextStyle(color: Colors.purple),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                store.deleteAd(ad);
+                              },
+                              child: const Text(
+                                'Sim',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                     icon: const Icon(
                       Icons.delete,
                       size: 20,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clone_olx/screens/ad/ad_screen.dart';
 import 'package:clone_olx/screens/announcement/announcement_screen.dart';
+import 'package:clone_olx/stores/myads_store.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
@@ -11,9 +12,11 @@ class ActiveAdTile extends StatelessWidget {
   ActiveAdTile({
     Key? key,
     required this.ad,
+    required this.store,
   }) : super(key: key);
 
   final Announcement ad;
+  final MyAdsStore store;
 
   final List<MenuChoice> choices = [
     MenuChoice(index: 0, title: 'Editar', iconData: Icons.edit),
@@ -21,9 +24,71 @@ class ActiveAdTile extends StatelessWidget {
     MenuChoice(index: 2, title: 'Excluir', iconData: Icons.delete),
   ];
 
-  void editAd(BuildContext context) {
-    Navigator.of(context).push(
+  void editAd(BuildContext context) async {
+    final success = await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => AnnouncementScreen(ad: ad)),
+    );
+
+    if (success != null && success) {
+      store.refresh();
+    }
+  }
+
+  void soldAd(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Vendido'),
+        content: Text('Confirmar a venda de ${ad.title}?'),
+        actions: [
+          TextButton(
+            onPressed: Navigator.of(context).pop,
+            child: const Text(
+              'Não',
+              style: TextStyle(color: Colors.purple),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              store.soldAd(ad);
+            },
+            child: const Text(
+              'Sim',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void deleteAd(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Excluir'),
+        content: Text('Confirmar a exclusão de ${ad.title}?'),
+        actions: [
+          TextButton(
+            onPressed: Navigator.of(context).pop,
+            child: const Text(
+              'Não',
+              style: TextStyle(color: Colors.purple),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              store.deleteAd(ad);
+            },
+            child: const Text(
+              'Sim',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -96,8 +161,10 @@ class ActiveAdTile extends StatelessWidget {
                           editAd(context);
                           break;
                         case 1:
+                          soldAd(context);
                           break;
                         case 2:
+                          deleteAd(context);
                           break;
                         default:
                           break;

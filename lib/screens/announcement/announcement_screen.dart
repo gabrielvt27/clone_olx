@@ -42,7 +42,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
 
     when((_) => announcementStore.savedAd, () {
       if (editing) {
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(true);
       } else {
         GetIt.I<PageStore>().setPage(0);
         Navigator.of(context).push(

@@ -173,4 +173,28 @@ class AnnouncementRepository {
       return Future.error(ParseErrors.getDescription(response.error!.code));
     }
   }
+
+  Future<void> sold(Announcement ad) async {
+    final parseObject = ParseObject(keyAdTable)
+      ..set(keyAdId, ad.id)
+      ..set(keyAdStatus, AnnouncementStatus.sold.index);
+
+    final response = await parseObject.save();
+
+    if (!response.success) {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
+  }
+
+  Future<void> delete(Announcement ad) async {
+    final parseObject = ParseObject(keyAdTable)
+      ..set(keyAdId, ad.id)
+      ..set(keyAdStatus, AnnouncementStatus.deleted.index);
+
+    final response = await parseObject.save();
+
+    if (!response.success) {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
+  }
 }

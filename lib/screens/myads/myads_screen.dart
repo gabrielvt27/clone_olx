@@ -33,69 +33,87 @@ class _MyAdsScreenState extends State<MyAdsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Meus Anúncios"),
-        centerTitle: true,
-        bottom: TabBar(
-          controller: tabController,
-          indicatorColor: Colors.orange,
-          tabs: const [
-            Tab(
-              child: Text('ATIVOS'),
-            ),
-            Tab(
-              child: Text('PENDENTES'),
-            ),
-            Tab(
-              child: Text('VENDIDOS'),
-            ),
-          ],
+        appBar: AppBar(
+          title: const Text("Meus Anúncios"),
+          centerTitle: true,
+          bottom: TabBar(
+            controller: tabController,
+            indicatorColor: Colors.orange,
+            tabs: const [
+              Tab(
+                child: Text('ATIVOS'),
+              ),
+              Tab(
+                child: Text('PENDENTES'),
+              ),
+              Tab(
+                child: Text('VENDIDOS'),
+              ),
+            ],
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: TabBarView(
-          controller: tabController,
-          children: [
-            Observer(
-              builder: (context) {
-                if (myAdsStore.activeAds.isEmpty) return Container();
+        body: Observer(
+          builder: (context) {
+            if (myAdsStore.loading) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    Observer(
+                      builder: (context) {
+                        if (myAdsStore.activeAds.isEmpty) return Container();
 
-                return ListView.builder(
-                  itemCount: myAdsStore.activeAds.length,
-                  itemBuilder: (context, index) {
-                    return ActiveAdTile(ad: myAdsStore.activeAds[index]);
-                  },
-                );
-              },
-            ),
-            Observer(
-              builder: (context) {
-                if (myAdsStore.pendingAds.isEmpty) return Container();
+                        return ListView.builder(
+                          itemCount: myAdsStore.activeAds.length,
+                          itemBuilder: (context, index) {
+                            return ActiveAdTile(
+                              ad: myAdsStore.activeAds[index],
+                              store: myAdsStore,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    Observer(
+                      builder: (context) {
+                        if (myAdsStore.pendingAds.isEmpty) return Container();
 
-                return ListView.builder(
-                  itemCount: myAdsStore.pendingAds.length,
-                  itemBuilder: (context, index) {
-                    return PendingAdTile(ad: myAdsStore.pendingAds[index]);
-                  },
-                );
-              },
-            ),
-            Observer(
-              builder: (context) {
-                if (myAdsStore.soldAds.isEmpty) return Container();
+                        return ListView.builder(
+                          itemCount: myAdsStore.pendingAds.length,
+                          itemBuilder: (context, index) {
+                            return PendingAdTile(
+                                ad: myAdsStore.pendingAds[index]);
+                          },
+                        );
+                      },
+                    ),
+                    Observer(
+                      builder: (context) {
+                        if (myAdsStore.soldAds.isEmpty) return Container();
 
-                return ListView.builder(
-                  itemCount: myAdsStore.soldAds.length,
-                  itemBuilder: (context, index) {
-                    return SoldAdTile(ad: myAdsStore.soldAds[index]);
-                  },
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+                        return ListView.builder(
+                          itemCount: myAdsStore.soldAds.length,
+                          itemBuilder: (context, index) {
+                            return SoldAdTile(
+                              ad: myAdsStore.soldAds[index],
+                              store: myAdsStore,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+        ));
   }
 }
