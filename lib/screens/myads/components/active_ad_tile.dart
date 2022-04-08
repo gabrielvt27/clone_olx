@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clone_olx/screens/ad/ad_screen.dart';
+import 'package:clone_olx/screens/announcement/announcement_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
@@ -19,6 +20,12 @@ class ActiveAdTile extends StatelessWidget {
     MenuChoice(index: 1, title: 'Já vendi', iconData: Icons.thumb_up),
     MenuChoice(index: 2, title: 'Excluir', iconData: Icons.delete),
   ];
+
+  void editAd(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => AnnouncementScreen(ad: ad)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +93,7 @@ class ActiveAdTile extends StatelessWidget {
                     onSelected: (choice) {
                       switch (choice.index) {
                         case 0:
+                          editAd(context);
                           break;
                         case 1:
                           break;

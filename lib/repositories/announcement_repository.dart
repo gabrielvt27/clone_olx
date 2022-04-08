@@ -98,6 +98,10 @@ class AnnouncementRepository {
 
       adObject.setACL(parseAcl);
 
+      if (ad.id != null) {
+        adObject.set<String>(keyAdId, ad.id!);
+      }
+
       adObject.set<String>(keyAdTitle, ad.title);
       adObject.set<String>(keyAdDescription, ad.description);
       adObject.set<num>(keyAdPrice, ad.price);
@@ -136,10 +140,8 @@ class AnnouncementRepository {
           }
           parseImages.add(parseFile);
         } else {
-          final parseFile = ParseFile(null);
-          parseFile.name = path.basename(image);
-          parseFile.url = image;
-          parseImages.add(parseFile);
+          final img = image as ParseFile;
+          parseImages.add(img);
         }
       }
 

@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class MyAdsScreen extends StatefulWidget {
-  const MyAdsScreen({Key? key}) : super(key: key);
+  const MyAdsScreen({Key? key, this.initialPage = 0}) : super(key: key);
+
+  final int initialPage;
 
   @override
   State<MyAdsScreen> createState() => _MyAdsScreenState();
@@ -21,7 +23,11 @@ class _MyAdsScreenState extends State<MyAdsScreen>
   void initState() {
     super.initState();
 
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(
+      length: 3,
+      vsync: this,
+      initialIndex: widget.initialPage,
+    );
   }
 
   @override

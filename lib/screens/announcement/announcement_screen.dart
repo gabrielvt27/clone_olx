@@ -1,10 +1,12 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:clone_olx/components/custom_drawer/custom_drawer.dart';
 import 'package:clone_olx/components/error_box.dart';
+import 'package:clone_olx/models/announcement.dart';
 import 'package:clone_olx/screens/announcement/components/category_field.dart';
 import 'package:clone_olx/screens/announcement/components/cep_field.dart';
 import 'package:clone_olx/screens/announcement/components/hide_phone_field.dart';
 import 'package:clone_olx/screens/announcement/components/images_field.dart';
+import 'package:clone_olx/screens/myads/myads_screen.dart';
 import 'package:clone_olx/stores/announcement_store.dart';
 import 'package:clone_olx/stores/page_store.dart';
 import 'package:flutter/material.dart';
@@ -14,21 +16,41 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 class AnnouncementScreen extends StatefulWidget {
-  const AnnouncementScreen({Key? key}) : super(key: key);
+  const AnnouncementScreen({
+    Key? key,
+    this.ad,
+  }) : super(key: key);
+
+  final Announcement? ad;
 
   @override
-  State<AnnouncementScreen> createState() => _AnnouncementScreenState();
+  State<AnnouncementScreen> createState() => _AnnouncementScreenState(ad);
 }
 
 class _AnnouncementScreenState extends State<AnnouncementScreen> {
-  final AnnouncementStore announcementStore = AnnouncementStore();
+  _AnnouncementScreenState(Announcement? ad)
+      : editing = ad != null,
+        announcementStore = AnnouncementStore(ad);
+
+  final AnnouncementStore announcementStore;
+
+  bool editing;
 
   @override
   void initState() {
     super.initState();
 
     when((_) => announcementStore.savedAd, () {
-      GetIt.I<PageStore>().setPage(0);
+      if (editing) {
+        Navigator.of(context).pop();
+      } else {
+        GetIt.I<PageStore>().setPage(0);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MyAdsScreen(),
+          ),
+        );
+      }
     });
   }
 
@@ -43,9 +65,9 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(),
+      drawer: editing ? null : CustomDrawer(),
       appBar: AppBar(
-        title: const Text('Criar Anúncio'),
+        title: Text(editing ? 'Editar Anúncio' : 'Criar Anúncio'),
         centerTitle: true,
       ),
       body: Center(
@@ -91,6 +113,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                         Observer(
                           builder: (_) {
                             return TextFormField(
+                              initialValue: announcementStore.title,
                               onChanged: announcementStore.setTitle,
                               decoration: InputDecoration(
                                 labelText: "Título *",
@@ -103,6 +126,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                         ),
                         Observer(builder: (_) {
                           return TextFormField(
+                            initialValue: announcementStore.description,
                             onChanged: announcementStore.setDescription,
                             decoration: InputDecoration(
                               labelText: "Descrição *",
@@ -121,6 +145,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                         ),
                         Observer(builder: (_) {
                           return TextFormField(
+                            initialValue: announcementStore.priceText,
                             onChanged: announcementStore.setPrice,
                             keyboardType: TextInputType.number,
                             inputFormatters: [

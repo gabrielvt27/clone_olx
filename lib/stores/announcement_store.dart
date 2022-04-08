@@ -1,4 +1,5 @@
 import 'package:clone_olx/models/address.dart';
+import 'package:clone_olx/models/announcement.dart';
 import 'package:clone_olx/models/category.dart';
 import 'package:clone_olx/repositories/announcement_repository.dart';
 import 'package:clone_olx/stores/cep_store.dart';
@@ -12,6 +13,25 @@ part 'announcement_store.g.dart';
 class AnnouncementStore = _AnnouncementStoreBase with _$AnnouncementStore;
 
 abstract class _AnnouncementStoreBase with Store {
+  _AnnouncementStoreBase(this.ad) {
+    if (ad != null) {
+      title = ad!.title;
+      description = ad!.description;
+      images = ad!.images.asObservable();
+      category = ad!.category;
+      priceText = ad!.price.toStringAsFixed(2);
+      hidePhone = ad!.hidePhone;
+    }
+
+    if (ad != null && ad!.address != null) {
+      cepStore = CepStore(ad!.address.cep);
+    } else {
+      cepStore = CepStore(null);
+    }
+  }
+
+  final Announcement? ad;
+
   ObservableList images = ObservableList();
 
   @computed
@@ -90,7 +110,7 @@ abstract class _AnnouncementStoreBase with Store {
   @action
   void setHidePhone(bool? value) => hidePhone = value!;
 
-  CepStore cepStore = CepStore();
+  late CepStore cepStore;
 
   @computed
   Address? get address => cepStore.address;
@@ -167,17 +187,31 @@ abstract class _AnnouncementStoreBase with Store {
   @action
   Future<void> _send() async {
     final user = GetIt.I<UserManagerStore>().user;
-
-    final announcement = AnnouncementViewModel(
-      images: images,
-      title: title,
-      description: description,
-      category: category!,
-      address: address!,
-      price: price!,
-      hidePhone: hidePhone,
-      user: user!,
-    );
+    AnnouncementViewModel announcement;
+    if (ad != null) {
+      announcement = AnnouncementViewModel(
+        id: ad!.id,
+        images: images,
+        title: title,
+        description: description,
+        category: category!,
+        address: address!,
+        price: price!,
+        hidePhone: hidePhone,
+        user: user!,
+      );
+    } else {
+      announcement = AnnouncementViewModel(
+        images: images,
+        title: title,
+        description: description,
+        category: category!,
+        address: address!,
+        price: price!,
+        hidePhone: hidePhone,
+        user: user!,
+      );
+    }
 
     loading = true;
     errorSend = null;

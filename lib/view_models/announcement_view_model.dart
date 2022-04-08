@@ -4,6 +4,7 @@ import 'package:clone_olx/models/category.dart';
 import 'package:clone_olx/models/user.dart';
 
 class AnnouncementViewModel {
+  String? id;
   List images;
   String title;
   String description;
@@ -12,7 +13,7 @@ class AnnouncementViewModel {
   num price;
   bool hidePhone;
   User user;
-  AnnouncementStatus status = AnnouncementStatus.pending;
+  AnnouncementStatus status;
 
   AnnouncementViewModel({
     required this.images,
@@ -23,6 +24,7 @@ class AnnouncementViewModel {
     required this.price,
     required this.hidePhone,
     required this.user,
-    status,
+    this.status = AnnouncementStatus.pending,
+    this.id,
   });
 }

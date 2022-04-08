@@ -6,6 +6,7 @@ import 'package:clone_olx/stores/announcement_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class ImagesField extends StatelessWidget {
   const ImagesField({
@@ -73,6 +74,10 @@ class ImagesField extends StatelessWidget {
                     ),
                   );
                 } else {
+                  final Object image = (announcementStore.images[index] is File)
+                      ? FileImage(announcementStore.images[index])
+                      : NetworkImage(
+                          (announcementStore.images[index] as ParseFile).url!);
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
@@ -88,8 +93,7 @@ class ImagesField extends StatelessWidget {
                       },
                       child: CircleAvatar(
                         radius: 44,
-                        backgroundImage:
-                            FileImage(announcementStore.images[index]),
+                        backgroundImage: image as ImageProvider,
                       ),
                     ),
                   );

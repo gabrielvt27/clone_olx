@@ -7,7 +7,7 @@ import 'package:clone_olx/helpers/extensions.dart';
 import 'package:clone_olx/models/announcement.dart';
 
 class SoldAdTile extends StatelessWidget {
-  SoldAdTile({
+  const SoldAdTile({
     Key? key,
     required this.ad,
   }) : super(key: key);

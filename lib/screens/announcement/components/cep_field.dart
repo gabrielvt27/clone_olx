@@ -21,6 +21,7 @@ class CepField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextFormField(
+          initialValue: cepStore.cep,
           onChanged: cepStore.setCep,
           keyboardType: TextInputType.number,
           inputFormatters: [
