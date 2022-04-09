@@ -1,10 +1,14 @@
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:clone_olx/stores/edita_account_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class EditAccountScreens extends StatelessWidget {
-  const EditAccountScreens({Key? key}) : super(key: key);
+  EditAccountScreens({Key? key}) : super(key: key);
+
+  final EditAccountStore store = EditAccountStore();
 
   @override
   Widget build(BuildContext context) {
@@ -39,55 +43,68 @@ class EditAccountScreens extends StatelessWidget {
                         activeFgColor: Colors.white,
                         inactiveFgColor: Colors.white,
                         initialLabelIndex: 1,
-                        onToggle: (i) {},
+                        onToggle: store.setUserType,
                       );
                     },
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.purple,
+                  Observer(
+                    builder: (_) {
+                      return TextFormField(
+                        onChanged: store.setName,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.purple,
+                            ),
+                          ),
+                          isDense: true,
+                          labelText: "Nome*",
+                          labelStyle: const TextStyle(
+                            color: Colors.purple,
+                          ),
+                          errorText: store.nameError,
                         ),
-                      ),
-                      isDense: true,
-                      labelText: "Nome*",
-                      labelStyle: TextStyle(
-                        color: Colors.purple,
-                      ),
-                    ),
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Observer(
+                    builder: (_) {
+                      return TextFormField(
+                        onChanged: store.setPhone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter(),
+                        ],
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.purple,
+                            ),
+                          ),
+                          isDense: true,
+                          labelText: "Telefone*",
+                          labelStyle: const TextStyle(
+                            color: Colors.purple,
+                          ),
+                          errorText: store.phoneError,
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 8,
                   ),
                   TextFormField(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter(),
-                    ],
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.purple,
-                        ),
-                      ),
-                      isDense: true,
-                      labelText: "Telefone*",
-                      labelStyle: TextStyle(
-                        color: Colors.purple,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
+                    onChanged: store.setPass1,
                     obscureText: true,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -106,38 +123,46 @@ class EditAccountScreens extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.purple,
+                  Observer(
+                    builder: (_) {
+                      return TextFormField(
+                        onChanged: store.setPass2,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.purple,
+                            ),
+                          ),
+                          isDense: true,
+                          labelText: "Confirmar Nova Senha*",
+                          labelStyle: const TextStyle(
+                            color: Colors.purple,
+                          ),
+                          errorText: store.passError,
                         ),
-                      ),
-                      isDense: true,
-                      labelText: "Confirmar Nova Senha*",
-                      labelStyle: TextStyle(
-                        color: Colors.purple,
-                      ),
-                    ),
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   SizedBox(
                     height: 40,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orange,
-                        onSurface: Colors.orange.withOpacity(0.8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                    child: Observer(builder: (_) {
+                      return ElevatedButton(
+                        onPressed: store.formValid ? () {} : null,
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.orange,
+                          onSurface: Colors.orange.withOpacity(0.8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
-                      ),
-                      child: const Text("Salvar"),
-                    ),
+                        child: const Text("Salvar"),
+                      );
+                    }),
                   ),
                   const SizedBox(
                     height: 8,
