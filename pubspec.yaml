@@ -49,6 +49,7 @@ dependencies:
   readmore:
   intl:
   url_launcher:
+  toggle_switch:
   flutter_localizations:
     sdk: flutter
 

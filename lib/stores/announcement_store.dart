@@ -23,7 +23,7 @@ abstract class _AnnouncementStoreBase with Store {
       hidePhone = ad!.hidePhone;
     }
 
-    if (ad != null && ad!.address != null) {
+    if (ad != null) {
       cepStore = CepStore(ad!.address.cep);
     } else {
       cepStore = CepStore(null);

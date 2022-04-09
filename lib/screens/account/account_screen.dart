@@ -1,4 +1,5 @@
 import 'package:clone_olx/components/custom_drawer/custom_drawer.dart';
+import 'package:clone_olx/screens/edit_account/edit_account_screen.dart';
 import 'package:clone_olx/screens/myads/myads_screen.dart';
 import 'package:clone_olx/stores/user_manager_store.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,13 @@ class AccountScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.topRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const EditAccountScreens(),
+                            ),
+                          );
+                        },
                         child: const Text(
                           "EDITAR",
                           style: TextStyle(

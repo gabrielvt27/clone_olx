@@ -47,7 +47,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
         GetIt.I<PageStore>().setPage(0);
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => MyAdsScreen(),
+            builder: (context) => const MyAdsScreen(),
           ),
         );
       }
