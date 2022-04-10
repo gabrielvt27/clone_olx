@@ -3,6 +3,7 @@ import 'package:clone_olx/screens/edit_account/edit_account_screen.dart';
 import 'package:clone_olx/screens/myads/myads_screen.dart';
 import 'package:clone_olx/stores/user_manager_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -29,28 +30,32 @@ class AccountScreen extends StatelessWidget {
                 height: 140,
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            GetIt.I<UserManagerStore>().user!.name,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.purple,
-                              fontWeight: FontWeight.w900,
-                            ),
+                    Observer(
+                      builder: (_) {
+                        return Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                GetIt.I<UserManagerStore>().user!.name,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.purple,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              Text(
+                                GetIt.I<UserManagerStore>().user!.email,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            GetIt.I<UserManagerStore>().user!.email,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                     Align(
                       alignment: Alignment.topRight,

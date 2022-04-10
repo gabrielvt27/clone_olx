@@ -33,7 +33,9 @@ abstract class _MyAdsStoreBase with Store {
       loading = true;
       allAds = await AnnouncementRepository().getMyAds(user!);
       loading = false;
-    } catch (e) {}
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @observable

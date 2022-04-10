@@ -8,12 +8,14 @@ class User {
     required this.phone,
     required this.type,
     required this.createdAt,
+    this.pass,
   });
 
   String id;
   String name;
   String email;
   String phone;
+  String? pass;
   UserType type;
   DateTime createdAt;
 

@@ -24,6 +24,7 @@ class AnnouncementScreen extends StatefulWidget {
   final Announcement? ad;
 
   @override
+  // ignore: no_logic_in_create_state
   State<AnnouncementScreen> createState() => _AnnouncementScreenState(ad);
 }
 

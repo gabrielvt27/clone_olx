@@ -19,7 +19,7 @@ class CustomDrawerHeader extends StatelessWidget {
           GetIt.I<PageStore>().setPage(4);
         } else {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => LoginScreen(),
+            builder: (context) => const LoginScreen(),
           ));
         }
       },
