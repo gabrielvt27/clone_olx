@@ -1,5 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:clone_olx/stores/edita_account_store.dart';
+import 'package:clone_olx/stores/edit_account_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -31,19 +31,26 @@ class EditAccountScreens extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  LayoutBuilder(
-                    builder: (_, constraints) {
-                      return ToggleSwitch(
-                        minWidth: constraints.biggest.width / 2.01,
-                        totalSwitches: 2,
-                        labels: const ['Particular', 'Profissional'],
-                        cornerRadius: 20,
-                        activeBgColor: const [Colors.purple],
-                        inactiveBgColor: Colors.grey,
-                        activeFgColor: Colors.white,
-                        inactiveFgColor: Colors.white,
-                        initialLabelIndex: 1,
-                        onToggle: store.setUserType,
+                  Observer(
+                    builder: (_) {
+                      return IgnorePointer(
+                        ignoring: store.loading,
+                        child: LayoutBuilder(
+                          builder: (_, constraints) {
+                            return ToggleSwitch(
+                              minWidth: constraints.biggest.width / 2.01,
+                              totalSwitches: 2,
+                              labels: const ['Particular', 'Profissional'],
+                              cornerRadius: 20,
+                              activeBgColor: const [Colors.purple],
+                              inactiveBgColor: Colors.grey,
+                              activeFgColor: Colors.white,
+                              inactiveFgColor: Colors.white,
+                              initialLabelIndex: store.userType!.index,
+                              onToggle: store.setUserType,
+                            );
+                          },
+                        ),
                       );
                     },
                   ),
@@ -53,6 +60,8 @@ class EditAccountScreens extends StatelessWidget {
                   Observer(
                     builder: (_) {
                       return TextFormField(
+                        initialValue: store.name,
+                        enabled: !store.loading,
                         onChanged: store.setName,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
@@ -77,6 +86,8 @@ class EditAccountScreens extends StatelessWidget {
                   Observer(
                     builder: (_) {
                       return TextFormField(
+                        initialValue: store.phone,
+                        enabled: !store.loading,
                         onChanged: store.setPhone,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
@@ -103,22 +114,27 @@ class EditAccountScreens extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  TextFormField(
-                    onChanged: store.setPass1,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.purple,
+                  Observer(
+                    builder: (_) {
+                      return TextFormField(
+                        enabled: !store.loading,
+                        onChanged: store.setPass1,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.purple,
+                            ),
+                          ),
+                          isDense: true,
+                          labelText: "Nova Senha",
+                          labelStyle: TextStyle(
+                            color: Colors.purple,
+                          ),
                         ),
-                      ),
-                      isDense: true,
-                      labelText: "Nova Senha",
-                      labelStyle: TextStyle(
-                        color: Colors.purple,
-                      ),
-                    ),
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 8,
@@ -126,6 +142,7 @@ class EditAccountScreens extends StatelessWidget {
                   Observer(
                     builder: (_) {
                       return TextFormField(
+                        enabled: !store.loading,
                         onChanged: store.setPass2,
                         obscureText: true,
                         decoration: InputDecoration(
@@ -148,22 +165,29 @@ class EditAccountScreens extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  SizedBox(
-                    height: 40,
-                    child: Observer(builder: (_) {
-                      return ElevatedButton(
-                        onPressed: store.formValid ? () {} : null,
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.orange,
-                          onSurface: Colors.orange.withOpacity(0.8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                  Observer(builder: (_) {
+                    return SizedBox(
+                      height: 40,
+                      child: Observer(builder: (_) {
+                        return ElevatedButton(
+                          onPressed: store.savePressed,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.orange,
+                            onSurface: Colors.orange.withOpacity(0.8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
-                        ),
-                        child: const Text("Salvar"),
-                      );
-                    }),
-                  ),
+                          child: store.loading
+                              ? const CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
+                              : const Text("Salvar"),
+                        );
+                      }),
+                    );
+                  }),
                   const SizedBox(
                     height: 8,
                   ),

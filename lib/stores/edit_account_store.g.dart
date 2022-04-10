@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'edita_account_store.dart';
+part of 'edit_account_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -51,17 +51,24 @@ mixin _$EditAccountStore on _EditAccountStoreBase, Store {
       (_$formValidComputed ??= Computed<bool>(() => super.formValid,
               name: '_EditAccountStoreBase.formValid'))
           .value;
+  Computed<VoidCallback?>? _$savePressedComputed;
+
+  @override
+  VoidCallback? get savePressed => (_$savePressedComputed ??=
+          Computed<VoidCallback?>(() => super.savePressed,
+              name: '_EditAccountStoreBase.savePressed'))
+      .value;
 
   final _$userTypeAtom = Atom(name: '_EditAccountStoreBase.userType');
 
   @override
-  UserType get userType {
+  UserType? get userType {
     _$userTypeAtom.reportRead();
     return super.userType;
   }
 
   @override
-  set userType(UserType value) {
+  set userType(UserType? value) {
     _$userTypeAtom.reportWrite(value, super.userType, () {
       super.userType = value;
     });
@@ -125,6 +132,28 @@ mixin _$EditAccountStore on _EditAccountStoreBase, Store {
     _$pass2Atom.reportWrite(value, super.pass2, () {
       super.pass2 = value;
     });
+  }
+
+  final _$loadingAtom = Atom(name: '_EditAccountStoreBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  final _$_saveAsyncAction = AsyncAction('_EditAccountStoreBase._save');
+
+  @override
+  Future<void> _save() {
+    return _$_saveAsyncAction.run(() => super._save());
   }
 
   final _$_EditAccountStoreBaseActionController =
@@ -193,12 +222,14 @@ name: ${name},
 phone: ${phone},
 pass1: ${pass1},
 pass2: ${pass2},
+loading: ${loading},
 nameValid: ${nameValid},
 nameError: ${nameError},
 phoneValid: ${phoneValid},
 phoneError: ${phoneError},
 passValid: ${passValid},
-formValid: ${formValid}
+formValid: ${formValid},
+savePressed: ${savePressed}
     ''';
   }
 }

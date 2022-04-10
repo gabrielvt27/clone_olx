@@ -1,12 +1,26 @@
+import 'dart:ui';
+
 import 'package:clone_olx/models/user.dart';
+import 'package:clone_olx/stores/user_manager_store.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-part 'edita_account_store.g.dart';
+part 'edit_account_store.g.dart';
 
 class EditAccountStore = _EditAccountStoreBase with _$EditAccountStore;
 
 abstract class _EditAccountStoreBase with Store {
+  _EditAccountStoreBase() {
+    final user = userManagerStore.user;
+
+    name = user!.name;
+    phone = user.phone;
+    userType = user.type;
+  }
+
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
+
   @observable
-  late UserType userType;
+  UserType? userType;
 
   @action
   void setUserType(int? val) => UserType.values[val!];
@@ -63,5 +77,20 @@ abstract class _EditAccountStoreBase with Store {
     } else {
       return null;
     }
+  }
+
+  @observable
+  bool loading = false;
+
+  @computed
+  VoidCallback? get savePressed => (formValid && !loading) ? _save : null;
+
+  @action
+  Future<void> _save() async {
+    loading = true;
+
+    await Future.delayed(Duration(seconds: 2));
+
+    loading = false;
   }
 }
