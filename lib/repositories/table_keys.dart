@@ -25,3 +25,8 @@ const String keyAdCategory = 'category';
 const String keyAdOwner = 'owner';
 const String keyAdCreatedAt = 'createdAt';
 const String keyAdViews = 'views';
+
+const String keyFavoritesTable = 'Favorite';
+const String keyFavoritesId = 'objectId';
+const String keyFavoritesOwner = 'owner';
+const String keyFavoritesAd = 'announcement';
