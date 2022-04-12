@@ -2,30 +2,35 @@ import 'package:clone_olx/constants.dart';
 import 'package:clone_olx/models/announcement.dart';
 import 'package:clone_olx/models/category.dart';
 import 'package:clone_olx/repositories/announcement_repository.dart';
+import 'package:clone_olx/stores/connection_store.dart';
 import 'package:clone_olx/stores/filter_store.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 part 'home_store.g.dart';
 
 class HomeStore = _HomeStoreBase with _$HomeStore;
 
 abstract class _HomeStoreBase with Store {
+  final ConnectionStore connectionStore = GetIt.I<ConnectionStore>();
+
   _HomeStoreBase() {
     autorun((_) async {
-      try {
+      if (connectionStore.connected && adList.isEmpty && !loading) {
         setLoading(true);
+        try {
+          final newAdList = await AnnouncementRepository().getHomeAdList(
+            filter: filterStore,
+            search: searchText,
+            category: category,
+            page: page,
+          );
 
-        final newAdList = await AnnouncementRepository().getHomeAdList(
-          filter: filterStore,
-          search: searchText,
-          category: category,
-          page: page,
-        );
-
-        addNewAds(newAdList);
+          addNewAds(newAdList);
+          setError(null);
+        } catch (e) {
+          setError(e.toString());
+        }
         setLoading(false);
-        setError(null);
-      } catch (e) {
-        setError(e.toString());
       }
     });
   }

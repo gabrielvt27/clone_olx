@@ -95,29 +95,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   Observer(
                     builder: (_) {
                       if (homeStore.error != null) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.error,
-                                size: 100,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              Text(
-                                "Ocorreu um erro!",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
+                        return SizedBox(
+                          width: double.infinity,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  Icons.error,
+                                  size: 100,
                                   color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Text(
+                                  "Ocorreu um erro!",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       } else if (homeStore.adList.isEmpty) {
