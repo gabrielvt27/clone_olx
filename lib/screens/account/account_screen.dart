@@ -1,5 +1,6 @@
 import 'package:clone_olx/components/custom_drawer/custom_drawer.dart';
 import 'package:clone_olx/screens/edit_account/edit_account_screen.dart';
+import 'package:clone_olx/screens/favorite/favorite_screen.dart';
 import 'package:clone_olx/screens/myads/myads_screen.dart';
 import 'package:clone_olx/stores/user_manager_store.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +104,13 @@ class AccountScreen extends StatelessWidget {
                   ),
                 ),
                 trailing: const Icon(Icons.keyboard_arrow_right),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => FavoriteScreen(
+                      hideDrawer: true,
+                    ),
+                  ));
+                },
               ),
             ],
           ),

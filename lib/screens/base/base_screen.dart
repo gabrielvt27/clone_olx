@@ -1,5 +1,6 @@
 import 'package:clone_olx/screens/account/account_screen.dart';
 import 'package:clone_olx/screens/announcement/announcement_screen.dart';
+import 'package:clone_olx/screens/favorite/favorite_screen.dart';
 import 'package:clone_olx/screens/home/home_screen.dart';
 import 'package:clone_olx/stores/page_store.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +41,7 @@ class _BaseScreenState extends State<BaseScreen> {
           Container(
             color: Colors.yellow,
           ),
-          Container(
-            color: Colors.purple,
-          ),
+          FavoriteScreen(),
           const AccountScreen(),
         ],
       ),
