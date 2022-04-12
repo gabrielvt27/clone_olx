@@ -1,6 +1,7 @@
 import 'package:clone_olx/appwidget.dart';
 import 'package:clone_olx/constants.dart';
 import 'package:clone_olx/stores/category_store.dart';
+import 'package:clone_olx/stores/connection_store.dart';
 import 'package:clone_olx/stores/favorite_store.dart';
 import 'package:clone_olx/stores/home_store.dart';
 import 'package:clone_olx/stores/page_store.dart';
@@ -17,6 +18,7 @@ void main() async {
 }
 
 void setupLocators() {
+  GetIt.I.registerSingleton(ConnectionStore());
   GetIt.I.registerSingleton(PageStore());
   GetIt.I.registerSingleton(HomeStore());
   GetIt.I.registerSingleton(UserManagerStore());

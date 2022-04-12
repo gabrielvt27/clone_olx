@@ -50,6 +50,7 @@ dependencies:
   intl:
   url_launcher:
   toggle_switch:
+  internet_connection_checker:
   flutter_localizations:
     sdk: flutter
 
